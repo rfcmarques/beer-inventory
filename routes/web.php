@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\BeerController;
+use App\Http\Controllers\BreweryController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\StyleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +22,9 @@ Route::get('/', function () {
 });
 
 Route::get('/beers', [BeerController::class, 'index']);
+
+Route::get('/styles', [StyleController::class, 'index']);
+
+Route::get('/breweries', [BreweryController::class, 'index']);
+
+Route::get('/items', [ItemController::class, 'index']);
