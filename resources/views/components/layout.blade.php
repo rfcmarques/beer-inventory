@@ -11,7 +11,11 @@
 </head>
 
 <body>
-    <h1>Hello World</h1>
+    <x-navbar></x-navbar>
+
+    <main class="container mt-5">
+        {{ $slot }}
+    </main>
 </body>
 
 </html>
