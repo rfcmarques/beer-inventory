@@ -9,6 +9,8 @@ class BeerController extends Controller
 {
     function index()
     {
-        return Beer::all();
+        return view('beers.index', [
+            'beers' => Beer::all(),
+        ]);
     }
 }

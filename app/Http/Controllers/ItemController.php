@@ -9,6 +9,8 @@ class ItemController extends Controller
 {
     function index()
     {
-        return Item::all();
+        return view('items.index', [
+            'items' => Item::all()
+        ]);
     }
 }

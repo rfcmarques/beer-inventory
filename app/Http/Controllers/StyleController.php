@@ -9,6 +9,8 @@ class StyleController extends Controller
 {
     function index()
     {
-        return Style::all();
+        return view('styles.index', [
+            'styles' => Style::all()
+        ]);
     }
 }
