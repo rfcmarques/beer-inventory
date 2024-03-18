@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('brewery_id')->constrained();
             $table->foreignId('style_id')->constrained();
+            $table->float('abv');
             $table->timestamps();
         });
     }

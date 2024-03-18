@@ -23,9 +23,10 @@ class BeerFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->sentence(2),
             'brewery_id' => Brewery::factory(),
             'style_id' => Style::factory(),
+            'abv' => $this->faker->numberBetween(0.5, 14),
         ];
     }
 }

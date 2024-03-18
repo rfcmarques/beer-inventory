@@ -21,7 +21,7 @@ class ItemFactory extends Factory
     {
         return [
             'beer_id' => Beer::factory(),
-            'container' => $this->faker->name(),
+            'container' => $this->faker->randomElement(['Bottle 330ml', 'Bottle 375ml', 'Bottle 750ml', 'Can 330ml', 'Can 440ml', 'Can 473ml']),
             'expiration_date' => $this->faker->dateTime(),
         ];
     }
