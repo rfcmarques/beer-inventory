@@ -9,6 +9,8 @@ class Beer extends Model
 {
     use HasFactory;
 
+    $with = ['style', 'brewery'];
+
     public function style()
     {
         return $this->belongsTo(Style::class);
