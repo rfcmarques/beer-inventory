@@ -1,7 +1,10 @@
 <x-layout>
     <div class="card">
         <div class="card-header">
-            <h1 class="card-title">Inventory</h1>
+            <div class="d-flex">
+                <h1 class="card-title me-auto">Inventory</h1>
+                <a href="" class="btn btn-primary">Add</a>
+            </div>
         </div>
         <div class="card-body">
             <div class="card">

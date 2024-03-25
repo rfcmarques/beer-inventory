@@ -1,7 +1,10 @@
 <x-layout>
     <div class="card">
         <div class="card-header">
-            <h1 class="card-title">Styles List</h1>
+            <div class="d-flex">
+                <h1 class="card-title me-auto">Styles List</h1>
+                <a href="/styles/create" class="btn btn-primary">Add</a>
+            </div>
         </div>
         <div class="card-body">
             <div class="row">
