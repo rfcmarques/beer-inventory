@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Beer;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('beer_id')->constrained();
+            $table->foreignIdFor(Beer::class)->constrained();
             $table->string('container');
             $table->timestamp('expiration_date');
             $table->timestamps();
