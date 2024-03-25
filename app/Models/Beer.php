@@ -9,7 +9,7 @@ class Beer extends Model
 {
     use HasFactory;
 
-    $with = ['style', 'brewery'];
+    protected $with = ['style', 'brewery'];
 
     public function style()
     {

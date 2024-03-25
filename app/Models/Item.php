@@ -9,6 +9,8 @@ class Item extends Model
 {
     use HasFactory;
 
+    protected $with = 'beer';
+
     public function beer() {
         return $this->belongsTo(Beer::class);
     }
