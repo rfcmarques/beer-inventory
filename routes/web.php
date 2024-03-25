@@ -24,6 +24,8 @@ Route::get('/', function () {
 Route::get('/beers', [BeerController::class, 'index']);
 
 Route::get('/styles', [StyleController::class, 'index']);
+Route::get('/styles/create', [StyleController::class, 'create']);
+Route::post('/styles', [StyleController::class, 'store']);
 
 Route::get('/breweries', [BreweryController::class, 'index']);
 
