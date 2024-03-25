@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cache;
 
 class BeerController extends Controller
 {
-    function index()
+    public function index()
     {
 
         $beers = Cache::rememberForever('beers', fn () => Beer::all());
