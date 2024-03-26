@@ -1,4 +1,7 @@
 <x-layout>
+
+    <x-success-msg />
+
     <div class="card">
         <div class="card-header">
             <div class="d-flex">
@@ -18,6 +21,18 @@
                                     </div>
                                     <div>
                                         <h4 class="card-title">{{ $style->style }}</h4>
+                                    </div>
+                                    <div class="d-flex align-items-center ms-auto">
+                                        <a href="/styles/{{ $style->id }}/edit">
+                                            <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                        </a>
+                                        <form action="/styles/{{ $style->id }}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-link text-decoration-none" type="submit">
+                                                <i class="fa-solid fa-trash text-danger"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
