@@ -4,6 +4,7 @@ use App\Http\Controllers\BeerController;
 use App\Http\Controllers\BreweryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\StyleController;
+use App\Models\Brewery;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +25,6 @@ Route::get('/', function () {
 Route::get('/beers', [BeerController::class, 'index']);
 
 Route::resource('styles', StyleController::class)->except('show');
-
-Route::get('/breweries', [BreweryController::class, 'index']);
+Route::resource('breweries', BreweryController::class)->except('show');
 
 Route::get('/items', [ItemController::class, 'index']);
