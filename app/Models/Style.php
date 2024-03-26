@@ -9,6 +9,8 @@ class Style extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['style'];
+
     public function beers()
     {
         return $this->hasMany(Beer::class);
