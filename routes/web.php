@@ -22,8 +22,7 @@ Route::get('/', function () {
     return view('home.index');
 });
 
-Route::get('/beers', [BeerController::class, 'index']);
-
+Route::resource('beers', BeerController::class)->except('show');
 Route::resource('styles', StyleController::class)->except('show');
 Route::resource('breweries', BreweryController::class)->except('show');
 
