@@ -14,7 +14,8 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Beer::class)->constrained();
+            $table->foreignIdFor(Beer::class)
+                ->constrained()->cascadeOnDelete();
             $table->string('container');
             $table->timestamp('expiration_date');
             $table->timestamps();
