@@ -11,7 +11,12 @@ class Item extends Model
 
     protected $with = 'beer';
 
-    public function beer() {
+    protected $casts = [
+        'expiration_date' => 'datetime:Y-m-d'
+    ];
+
+    public function beer()
+    {
         return $this->belongsTo(Beer::class);
     }
 }
