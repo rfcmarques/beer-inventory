@@ -6,7 +6,7 @@
         <div class="card-body">
             <x-form.form endpoint="/styles" method="post">
                 <div class="col-md-6">
-                    <x-form.input name="style" label="Style Name" value="{{ old('style') }}" />
+                    <x-form.input name="name" label="Style Name" value="{{ old('name') }}" />
                 </div>
             </x-form.form>
         </div>

@@ -22,10 +22,10 @@
                             @foreach ($items as $item)
                                 <tr>
                                     <td>{{ $item->beer->name }}</td>
-                                    <td>{{ $item->beer->style->style }}</td>
+                                    <td>{{ $item->beer->style->name }}</td>
                                     <td>{{ $item->beer->brewery->name }}</td>
                                     <td>{{ $item->container }}</td>
-                                    <td>{{ $item->expiration_date }}</td>
+                                    <td>{{ $item->expiration_date->diffForHumans() }}</td>
                                     <td>{{ $item->created_at }}</td>
                                 </tr>
                             @endforeach
