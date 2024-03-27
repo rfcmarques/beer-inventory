@@ -20,7 +20,7 @@
                                         <i class="fa-solid fa-font-awesome fa-2xl"></i>
                                     </div>
                                     <div>
-                                        <h4 class="card-title">{{ $style->style }}</h4>
+                                        <h4 class="card-title">{{ $style->name }}</h4>
                                     </div>
                                     <div class="d-flex align-items-center ms-auto">
                                         <a href="/styles/{{ $style->id }}/edit">
