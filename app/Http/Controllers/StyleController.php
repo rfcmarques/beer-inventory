@@ -25,7 +25,7 @@ class StyleController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'style' => 'required|unique:styles'
+            'name' => 'required|unique:styles'
         ]);
 
         $newStyle = Style::create($validatedData);
@@ -47,7 +47,7 @@ class StyleController extends Controller
     public function update(Style $style)
     {
         $validatedData = request()->validate([
-            'style' => 'required|unique:styles'
+            'name' => 'required|unique:styles'
         ]);
 
         $style->update($validatedData);

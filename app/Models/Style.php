@@ -9,7 +9,7 @@ class Style extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['style'];
+    protected $fillable = ['name'];
 
     public function beers()
     {

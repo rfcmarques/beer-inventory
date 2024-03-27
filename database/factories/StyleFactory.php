@@ -21,7 +21,7 @@ class StyleFactory extends Factory
     public function definition(): array
     {
         return [
-            'style' => $this->faker->unique()->randomElement(['IPA', 'APA', 'Porter', 'Stout', 'Sour', 'Hefeweizen', 'Dunkelweizen', 'Lager', 'Pilsner', 'Helles Lager', 'Barleywine', 'Pale Ale', 'Lambic',]),
+            'name' => $this->faker->unique()->randomElement(['IPA', 'APA', 'Porter', 'Stout', 'Sour', 'Hefeweizen', 'Dunkelweizen', 'Lager', 'Pilsner', 'Helles Lager', 'Barleywine', 'Pale Ale', 'Lambic',]),
         ];
     }
 }
