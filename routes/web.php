@@ -25,5 +25,4 @@ Route::get('/', function () {
 Route::resource('beers', BeerController::class)->except('show');
 Route::resource('styles', StyleController::class)->except('show');
 Route::resource('breweries', BreweryController::class)->except('show');
-
-Route::get('/items', [ItemController::class, 'index']);
+Route::resource('items', ItemController::class);
