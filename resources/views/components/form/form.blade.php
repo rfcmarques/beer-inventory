@@ -10,6 +10,8 @@
     {{ $slot }}
 
     <div class="mb-3">
-        <button type="submit" class="btn btn-success">{{ $method === 'put' ? 'Edit' : 'Create' }}</button>
+        <button type="submit" class="btn btn-success">
+            {{ $method === 'put' ? 'Edit' : 'Create' }}
+        </button>
     </div>
 </form>
