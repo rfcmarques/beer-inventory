@@ -11,6 +11,8 @@ class Item extends Model
 
     protected $with = 'beer';
 
+    protected $fillable = ['beer_id', 'expiration_date', 'container'];
+
     protected $casts = [
         'expiration_date' => 'datetime:Y-m-d'
     ];
