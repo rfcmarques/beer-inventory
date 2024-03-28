@@ -3,7 +3,7 @@
         <div class="card-header">
             <div class="d-flex">
                 <h1 class="card-title me-auto">Inventory</h1>
-                <a href="" class="btn btn-primary">Add</a>
+                <a href="/items/create" class="btn btn-primary">Add</a>
             </div>
         </div>
         <div class="card-body">
@@ -21,12 +21,19 @@
                         <tbody class="table-group-divider">
                             @foreach ($items as $item)
                                 <tr>
-                                    <td>{{ $item->beer->name }}</td>
+
+                                    <td>
+                                        <a class="text-decoration-none" href="/items/{{ $item->id }}/edit">
+                                            {{ $item->beer->name }}
+                                        </a>
+                                    </td>
                                     <td>{{ $item->beer->style->name }}</td>
                                     <td>{{ $item->beer->brewery->name }}</td>
                                     <td>{{ $item->container }}</td>
-                                    <td>{{ $item->expiration_date->diffForHumans() }}</td>
-                                    <td>{{ $item->created_at }}</td>
+                                    <td title="{{ $item->expiration_date->format('Y-m-d') }}">
+                                        {{ $item->expiration_date->diffForHumans() }}
+                                    </td>
+                                    <td>{{ $item->created_at->format('Y-m-d') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
