@@ -10,7 +10,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
-<body>
+<body class="bg-body-tertiary">
     <x-navbar></x-navbar>
 
     <main class="container mt-5">
