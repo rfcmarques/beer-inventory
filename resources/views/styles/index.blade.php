@@ -8,5 +8,7 @@
                 <x-style-card :style="$style"></x-style-card>
             @endforeach
         </div>
+
+        {{ $styles->links() }}
     </x-container>
 </x-layout>
