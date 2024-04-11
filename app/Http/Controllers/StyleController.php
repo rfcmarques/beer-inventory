@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Style;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 
 class StyleController extends Controller
 {
     public function index()
     {
-        $styles = Cache::rememberForever('styles', fn () => Style::all());
+        $styles = Style::simplePaginate(9);
 
         return view('styles.index', [
             'styles' => $styles
@@ -30,10 +29,6 @@ class StyleController extends Controller
 
         $newStyle = Style::create($validatedData);
 
-        if (Cache::has('styles')) {
-            Cache::forget('styles');
-        }
-
         return redirect('/styles')->with('success', "{$newStyle->style} was created with success");
     }
 
@@ -52,9 +47,6 @@ class StyleController extends Controller
 
         $style->update($validatedData);
 
-        if (Cache::has('styles')) {
-            Cache::forget('styles');
-        }
 
         return redirect('/styles')->with('success', "{$style->style} was updated with success");
     }
@@ -62,10 +54,6 @@ class StyleController extends Controller
     public function destroy(Style $style)
     {
         $style->delete();
-
-        if (Cache::has('styles')) {
-            Cache::forget('styles');
-        }
 
         return back()->with('success', 'Style deleted with success');
     }
