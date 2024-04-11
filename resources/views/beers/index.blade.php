@@ -10,7 +10,7 @@
             <div class="col-md-6 overflow-auto" style="max-height: 50vh">
                 <input type="text" class="form-control mb-3" placeholder="Search...">
                 @foreach ($beers as $beer)
-                    <x-beer-card :beer="$beer" />
+                    <x-beer-card :$beer />
                 @endforeach
             </div>
         </div>
