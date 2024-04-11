@@ -1,6 +1,6 @@
 <div class="row mb-3">
     <div class="col-12">
-        <div class="card card border-1 shadow">
+        <div class="card card border shadow">
             <div class="card-body d-flex">
                 <div class="me-auto">
                     <h3 class="fw-semibold">{{ $beer->name }}</h3>

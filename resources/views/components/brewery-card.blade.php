@@ -1,5 +1,5 @@
 <div class="col-md-4 mb-3">
-    <div class="card shadow-sm h-100">
+    <div class="card border shadow-sm h-100">
         <div class="card-body">
             <div class="d-flex flex-row align-items-center h-100">
                 <div class="col me-5">
