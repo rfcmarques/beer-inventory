@@ -19,14 +19,27 @@ class ContainerFactory extends Factory
      */
     public function definition(): array
     {
-        $type = $this->faker->randomElement(['Can', 'Bottle']);
-        $capacity = $type === 'Can'
-            ? $this->faker->unique(true)->randomElement([330, 355, 440, 473])
-            : $this->faker->unique(true)->randomElement([250, 330, 375, 500, 750]);
+        static $combinations = null;
+
+        if ($combinations === null) {
+            $combinations = [
+                ['type' => 'Can', 'capacity' => 330],
+                ['type' => 'Can', 'capacity' => 355],
+                ['type' => 'Can', 'capacity' => 440],
+                ['type' => 'Can', 'capacity' => 473],
+                ['type' => 'Bottle', 'capacity' => 250],
+                ['type' => 'Bottle', 'capacity' => 330],
+                ['type' => 'Bottle', 'capacity' => 375],
+                ['type' => 'Bottle', 'capacity' => 500],
+                ['type' => 'Bottle', 'capacity' => 750],
+            ];
+        }
+
+        $combination = array_pop($combinations);
 
         return [
-            'type' => $type,
-            'capacity' => $capacity
+            'type' => $combination['type'],
+            'capacity' => $combination['capacity']
         ];
     }
 }
