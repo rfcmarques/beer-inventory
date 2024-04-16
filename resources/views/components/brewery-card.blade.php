@@ -7,8 +7,7 @@
                     <p>{{ $brewery->country }}</p>
                 </div>
                 <div class="col">
-                    <img src="https://www.doiscorvos.pt/images/Logo_DoisCorvos2020_Black.png"
-                        class="img-fluid object-fit-contain" />
+                    <img src="/imgs/hop.svg" class="img-fluid object-fit-contain" />
                 </div>
             </div>
         </div>

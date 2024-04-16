@@ -29,7 +29,7 @@ class StyleController extends Controller
 
         $newStyle = Style::create($validatedData);
 
-        return redirect('/styles')->with('success', "{$newStyle->style} was created with success");
+        return redirect('/styles')->with('success', "{$newStyle->name} was created with success");
     }
 
     public function edit(Style $style)
@@ -48,7 +48,7 @@ class StyleController extends Controller
         $style->update($validatedData);
 
 
-        return redirect('/styles')->with('success', "{$style->style} was updated with success");
+        return redirect('/styles')->with('success', "{$style->name} was updated with success");
     }
 
     public function destroy(Style $style)
