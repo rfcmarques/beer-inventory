@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Container;
 use App\Models\Item;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,6 +14,6 @@ class ItemSeeder extends Seeder
      */
     public function run(): void
     {
-        Item::factory(10)->create();
+        Item::factory(10)->recycle(Container::all())->create();
     }
 }

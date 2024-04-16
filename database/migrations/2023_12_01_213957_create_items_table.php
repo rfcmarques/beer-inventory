@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Beer;
+use App\Models\Container;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Beer::class)
                 ->constrained()->cascadeOnDelete();
-            $table->string('container');
+            $table->foreignIdFor(Container::class)
+                ->nullable()->constrained()->nullOnDelete();
             $table->timestamp('expiration_date');
             $table->timestamps();
         });

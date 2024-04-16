@@ -17,8 +17,8 @@
                     </div>
 
                     <div class="col-md-6">
-                        <x-form.datalist name="container" label="Container" :options="collect($containers)"
-                            value="{{ old('container') ?? $item->container }}" />
+                        <x-form.select name="container_id" label="Container" :options="$containers"
+                            value="{{ old('container') ?? $item->container->id }}" />
                     </div>
                 </div>
             </x-form.form>
