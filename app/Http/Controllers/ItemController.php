@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Beer;
+use App\Models\Container;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -21,19 +22,14 @@ class ItemController extends Controller
 
     public function create()
     {
+        $containers = Cache::rememberForever('containers', fn () => Container::all());
+
+        $beers = Cache::get('beers')
+            ?? Beer::select(['id', 'name'])->get();
+
         return view('items.create', [
-            'beers' => Beer::select(['id', 'name'])->get(),
-            'containers' => [
-                'Bottle 250ml',
-                'Bottle 330ml',
-                'Bottle 375ml',
-                'Bottle 500ml',
-                'Bottle 750ml',
-                'Can 330ml',
-                'Can 355ml',
-                'Can 440ml',
-                'Can 473ml'
-            ]
+            'beers' => $beers,
+            'containers' => $containers,
         ]);
     }
 
@@ -41,9 +37,9 @@ class ItemController extends Controller
     {
         $validatedData = $request->validate([
             'beer_id' => 'required',
+            'container_id' => 'required',
             'expiration_date' => 'required',
             'quantity' => 'required|min:1',
-            'container' => 'required'
         ]);
 
         $validatedData = Arr::except($validatedData, 'quantity');
@@ -61,20 +57,16 @@ class ItemController extends Controller
 
     public function edit(Item $item)
     {
+        $beers = Cache::get('beers')
+            ?? Beer::select(['id', 'name'])->get();
+
+        $containers = Cache::get('containers')
+            ?? Container::select(['id', 'name'])->get();
+
         return view('items.edit', [
             'item' => $item,
-            'beers' => Beer::select(['id', 'name'])->get(),
-            'containers' => [
-                'Bottle 250ml',
-                'Bottle 330ml',
-                'Bottle 375ml',
-                'Bottle 500ml',
-                'Bottle 750ml',
-                'Can 330ml',
-                'Can 355ml',
-                'Can 440ml',
-                'Can 473ml'
-            ]
+            'beers' => $beers,
+            'containers' => $containers
         ]);
     }
 
@@ -83,7 +75,7 @@ class ItemController extends Controller
         $validatedData = request()->validate([
             'beer_id' => 'required',
             'expiration_date' => 'required',
-            'container' => 'required'
+            'container_id' => 'required'
         ]);
 
         $item->update($validatedData);
@@ -97,7 +89,7 @@ class ItemController extends Controller
 
     public function destroy(Item $item)
     {
-        $item->delet();
+        $item->delete();
 
         if (Cache::has('items')) {
             Cache::forget('items');

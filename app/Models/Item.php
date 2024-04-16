@@ -9,9 +9,9 @@ class Item extends Model
 {
     use HasFactory;
 
-    protected $with = 'beer';
+    protected $with = ['beer', 'container'];
 
-    protected $fillable = ['beer_id', 'expiration_date', 'container'];
+    protected $fillable = ['beer_id', 'expiration_date', 'container_id'];
 
     protected $casts = [
         'expiration_date' => 'datetime:Y-m-d'
@@ -20,5 +20,10 @@ class Item extends Model
     public function beer()
     {
         return $this->belongsTo(Beer::class);
+    }
+
+    public function container()
+    {
+        return $this->belongsTo(Container::class);
     }
 }

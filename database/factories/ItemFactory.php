@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Beer;
+use App\Models\Container;
 use App\Models\Item;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,7 +22,7 @@ class ItemFactory extends Factory
     {
         return [
             'beer_id' => Beer::factory(),
-            'container' => $this->faker->randomElement(['Bottle 330ml', 'Bottle 375ml', 'Bottle 750ml', 'Can 330ml', 'Can 440ml', 'Can 473ml']),
+            'container_id' => Container::factory(),
             'expiration_date' => $this->faker->dateTime(),
         ];
     }

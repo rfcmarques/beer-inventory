@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Beer;
-use App\Models\Container;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('containers', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Beer::class)
-                ->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Container::class)
-                ->nullable()->constrained()->nullOnDelete();
-            $table->timestamp('expiration_date');
+            $table->string('type');
+            $table->integer('capacity');
             $table->timestamps();
+
+            $table->unique(['type', 'capacity']);
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('containers');
     }
 };

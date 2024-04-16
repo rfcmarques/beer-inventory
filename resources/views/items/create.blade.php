@@ -7,7 +7,7 @@
             <x-form.form endpoint="/items" method="post">
                 <div class="row">
                     <div class="col-md-6">
-                        <x-form.select name="beer" label="Beer" :options="$beers" value="{{ old('beer') }}" />
+                        <x-form.select name="beer_id" label="Beer" :options="$beers" value="{{ old('beer') }}" />
                     </div>
 
                     <div class="col-md-6">
@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <x-form.datalist name="container" label="Container" :options="collect($containers)"
+                        <x-form.select name="container_id" label="Container" :options="$containers"
                             value="{{ old('container') }}" />
                     </div>
                 </div>
