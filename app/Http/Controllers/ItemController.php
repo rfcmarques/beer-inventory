@@ -48,10 +48,6 @@ class ItemController extends Controller
             Item::create($validatedData);
         }
 
-        if (Cache::has('items')) {
-            Cache::forget('items');
-        }
-
         return redirect('/items')->with('success', "New item was created with success");
     }
 
@@ -79,21 +75,13 @@ class ItemController extends Controller
         ]);
 
         $item->update($validatedData);
-
-        if (Cache::has('items')) {
-            Cache::forget('items');
-        }
-
+        
         return redirect('/items')->with('success', "Item was edited with success");
     }
 
     public function destroy(Item $item)
     {
         $item->delete();
-
-        if (Cache::has('items')) {
-            Cache::forget('items');
-        }
 
         return redirect('/items')->with('success', "Item was deleted with success");
     }
