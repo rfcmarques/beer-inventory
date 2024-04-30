@@ -38,10 +38,6 @@ class BeerController extends Controller
 
         $newBeer = Beer::create($validateData);
 
-        if (Cache::has('beers')) {
-            Cache::forget('beers');
-        }
-
         return redirect('/beers')->with('success', "{$newBeer->name} was created with success");
     }
 
@@ -65,20 +61,12 @@ class BeerController extends Controller
 
         $beer->update($validateData);
 
-        if (Cache::has('beers')) {
-            Cache::forget('beers');
-        }
-
         return redirect('/beers')->with('success', "{$beer->name} was updated with success");
     }
 
     public function destroy(Beer $beer)
     {
         $beer->delete();
-
-        if (Cache::has('beers')) {
-            Cache::forget('beers');
-        }
 
         return back()->with('success', 'Beer deleted with success');
     }

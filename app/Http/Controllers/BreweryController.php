@@ -31,10 +31,6 @@ class BreweryController extends Controller
 
         $newBrewery = Brewery::create($validatedData);
 
-        if (Cache::has('breweries')) {
-            Cache::forget('breweries');
-        }
-
         return redirect('/breweries')->with('success', "{$newBrewery->name} was created with success");
     }
 
@@ -52,20 +48,12 @@ class BreweryController extends Controller
 
         $brewery->update($validatedData);
 
-        if (Cache::has('breweries')) {
-            Cache::forget('breweries');
-        }
-
         return redirect('/breweries')->with('success', "{$brewery->name} was updated with success");
     }
 
     public function destroy(Brewery $brewery)
     {
         $brewery->delete();
-
-        if (Cache::has('breweries')) {
-            Cache::forget('breweries');
-        }
 
         return back()->with('success', 'Brewery deleted with success');
     }
