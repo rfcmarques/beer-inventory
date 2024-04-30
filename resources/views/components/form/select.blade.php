@@ -4,8 +4,8 @@
         <option value="">Select your option</option>
         @foreach ($options as $option)
             {{-- this is actually horse shit --}}
-            <option value="{{ $option->id }}" {{ $value == $option->id ? 'selected' : '' }}>
-                {{ $option->name ?? "{$option->type} {$option->capacity} ml" }}
+            <option value="{{ $option->id ?? $option }}" {{ $value == ($option->id ?? $option) ? 'selected' : '' }}>
+                {{ $option->name ?? ($option ?? "{$option->type} {$option->capacity} ml") }}
             </option>
         @endforeach
     </select>
