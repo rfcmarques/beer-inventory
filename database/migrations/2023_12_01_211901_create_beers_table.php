@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('beers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignIdFor(Brewery::class)->constrained();
-            $table->foreignIdFor(Style::class)->constrained();
+            $table->foreignIdFor(Brewery::class)
+                ->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(Style::class)
+                ->nullable()->constrained()->nullOnDelete();
             $table->float('abv');
             $table->timestamps();
         });

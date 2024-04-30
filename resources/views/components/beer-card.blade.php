@@ -4,8 +4,8 @@
             <div class="card-body d-flex">
                 <div class="me-auto">
                     <h3 class="fw-semibold">{{ $beer->name }}</h3>
-                    <h4>{{ $beer->brewery->name }}</h4>
-                    <h5 class="fw-light">{{ $beer->style->name }}</h5>
+                    <h4>{{ $beer->brewery->name ?? 'N/A' }}</h4>
+                    <h5 class="fw-light">{{ $beer->style->name ?? 'N/A' }}</h5>
                 </div>
                 <div class="dropdown-center">
                     <a class="text-decoration-none text-secondary" data-bs-toggle="dropdown" aria-expanded="false"

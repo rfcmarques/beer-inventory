@@ -16,8 +16,8 @@
                         {{ $item->beer->name }}
                     </a>
                 </td>
-                <td>{{ $item->beer->style->name }}</td>
-                <td>{{ $item->beer->brewery->name }}</td>
+                <td>{{ $item->beer->style->name ?? 'N/A' }}</td>
+                <td>{{ $item->beer->brewery->name ?? 'N/A' }}</td>
                 <td>{{ $item->container->type }} {{ $item->container->capacity }} ml</td>
                 <td title="{{ $item->expiration_date->format('Y-m-d') }}">
                     {{ $item->expiration_date->diffForHumans() }}
