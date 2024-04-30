@@ -11,7 +11,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <x-form.input name="country" label="Country" value="{{ old('country') }}" />
+                        <x-form.select name="country" label="Country" :options="$countries" value="{{ old('country') }}" />
                     </div>
                 </div>
             </x-form.form>
