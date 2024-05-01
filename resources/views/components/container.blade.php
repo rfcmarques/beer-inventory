@@ -1,6 +1,6 @@
-@props(['button', 'title'])
+@props(['title', 'button' => false])
 
-<div class="container">
+<div {{ $attributes->merge(['class' => 'container']) }}>
     <div class="d-flex flex-row align-items-center mb-3">
         <h1 class="me-auto">{{ $title }}</h1>
         @if ($button)
