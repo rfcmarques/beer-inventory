@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreStyleRequest;
+use App\Http\Requests\UpdateStyleRequest;
 use App\Models\Style;
-use Illuminate\Http\Request;
 
 class StyleController extends Controller
 {
@@ -21,11 +22,9 @@ class StyleController extends Controller
         return view('styles.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreStyleRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|unique:styles'
-        ]);
+        $validatedData = $request->validated();
 
         $newStyle = Style::create($validatedData);
 
@@ -39,11 +38,9 @@ class StyleController extends Controller
         ]);
     }
 
-    public function update(Style $style)
+    public function update(UpdateStyleRequest $request, Style $style)
     {
-        $validatedData = request()->validate([
-            'name' => 'required|unique:styles'
-        ]);
+        $validatedData = $request->validated();
 
         $style->update($validatedData);
 

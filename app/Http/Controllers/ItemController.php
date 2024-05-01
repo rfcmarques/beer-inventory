@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreItemRequest;
+use App\Http\Requests\UpdateItemRequest;
 use App\Models\Beer;
 use App\Models\Container;
 use App\Models\Item;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 
@@ -33,14 +34,9 @@ class ItemController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreItemRequest $request)
     {
-        $validatedData = $request->validate([
-            'beer_id' => 'required',
-            'container_id' => 'required',
-            'expiration_date' => 'required',
-            'quantity' => 'required|min:1',
-        ]);
+        $validatedData = $request->validated();
 
         $validatedData = Arr::except($validatedData, 'quantity');
 
@@ -66,16 +62,12 @@ class ItemController extends Controller
         ]);
     }
 
-    public function update(Item $item)
+    public function update(UpdateItemRequest $request, Item $item)
     {
-        $validatedData = request()->validate([
-            'beer_id' => 'required',
-            'expiration_date' => 'required',
-            'container_id' => 'required'
-        ]);
+        $validatedData = $request->validated();
 
         $item->update($validatedData);
-        
+
         return redirect('/items')->with('success', "Item was edited with success");
     }
 
