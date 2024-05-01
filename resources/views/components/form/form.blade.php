@@ -1,3 +1,5 @@
+@props(['endpoint', 'method' => 'post'])
+
 <form action="{{ $endpoint }}" method="POST">
     @csrf
 
