@@ -7,11 +7,16 @@
                 <h5>Filters</h5>
                 <p>TBD</p>
             </div>
-            <div class="col-md-6 overflow-auto" style="max-height: 50vh">
-                <input type="text" class="form-control mb-3" placeholder="Search...">
-                @foreach ($beers as $beer)
-                    <x-beer-card :$beer />
-                @endforeach
+            <div class="col-md-6">
+                <div class="d-flex flex-column">
+                    <input type="text" class="form-control mb-3" placeholder="Search...">
+
+                    <div class="overflow-x-hidden px-2" style="max-height:50vh">
+                        @foreach ($beers as $beer)
+                            <x-beer-card :$beer />
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     </x-container>
