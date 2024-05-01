@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBreweryRequest;
+use App\Http\Requests\UpdateBreweryRequest;
 use App\Models\Brewery;
 use App\Services\CountriesAPIService;
 use Illuminate\Http\Request;
@@ -27,12 +29,9 @@ class BreweryController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreBreweryRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'country' => 'required'
-        ]);
+        $validatedData = $request->validated();
 
         $newBrewery = Brewery::create($validatedData);
 
@@ -49,12 +48,9 @@ class BreweryController extends Controller
         ]);
     }
 
-    public function update(Brewery $brewery)
+    public function update(UpdateBreweryRequest $request, Brewery $brewery)
     {
-        $validatedData = request()->validate([
-            'name' => 'required',
-            'country' => 'required'
-        ]);
+        $validatedData = $request->validated();
 
         $brewery->update($validatedData);
 
