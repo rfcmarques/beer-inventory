@@ -1,3 +1,5 @@
+@props(['button', 'title'])
+
 <div class="container">
     <div class="d-flex flex-row align-items-center mb-3">
         <h1 class="me-auto">{{ $title }}</h1>
