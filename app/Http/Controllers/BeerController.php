@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateBeerRequest;
 use App\Models\Beer;
 use App\Models\Brewery;
 use App\Models\Style;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class BeerController extends Controller

@@ -6,7 +6,6 @@ use App\Http\Requests\StoreBreweryRequest;
 use App\Http\Requests\UpdateBreweryRequest;
 use App\Models\Brewery;
 use App\Services\CountriesAPIService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class BreweryController extends Controller
