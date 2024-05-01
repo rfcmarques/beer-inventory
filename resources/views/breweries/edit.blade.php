@@ -1,21 +1,24 @@
 <x-layout>
-    <div class="card">
-        <div class="card-header">
-            <h1 class="card-title">Edit Brewery</h1>
-        </div>
-        <div class="card-body">
+    <x-container title="Edit Brewery">
+        <x-card>
             <x-form.form endpoint="/breweries/{{ $brewery->id }}" method="put">
                 <div class="row">
-                    <div class="col-md-6">
-                        <x-form.input name="name" label="Name" value="{{ old('name') ?? $brewery->name }}" />
-                    </div>
+                    <x-form.field>
+                        <x-form.label for="name">Name</x-form.label>
+                        <x-form.input name="name" value="{{ old('name') ?? $brewery->name }}" />
+                    </x-form.field>
 
-                    <div class="col-md-6">
-                        <x-form.select name="country" label="Country" :options="$countries"
-                            value="{{ old('country') ?? $brewery->country }}" />
-                    </div>
+                    <x-form.field>
+                        <x-form.label for="name">Country</x-form.label>
+                        <x-form.select name="country" label="Country">
+                            @foreach ($countries as $country)
+                                <x-form.option value="{{ $country }}" text="{{ $country }}"
+                                    selectedValue="{{ old('country') ?? $brewery->country }}" />
+                            @endforeach
+                        </x-form.select>
+                    </x-form.field>
                 </div>
             </x-form.form>
-        </div>
-    </div>
+        </x-card>
+    </x-container>
 </x-layout>

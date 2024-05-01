@@ -1,14 +1,12 @@
 <x-layout>
-    <div class="card">
-        <div class="card-header">
-            <h1 class="card-title">Create Style</h1>
-        </div>
-        <div class="card-body">
-            <x-form.form endpoint="/styles" method="post">
-                <div class="col-md-6">
-                    <x-form.input name="name" label="Style Name" value="{{ old('name') }}" />
-                </div>
+    <x-container title="Create Style">
+        <x-card>
+            <x-form.form endpoint="/styles">
+                <x-form.field>
+                    <x-form.label for="name">Style Name</x-form.label>
+                    <x-form.input name="name" value="{{ old('name') }}" />
+                </x-form.field>
             </x-form.form>
-        </div>
-    </div>
+        </x-card>
+    </x-container>
 </x-layout>
