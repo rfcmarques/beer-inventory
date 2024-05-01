@@ -10,7 +10,7 @@ class CountriesAPIService
 {
     protected static $url = "https://restcountries.com/v3.1";
 
-    public static function getCountriesByName()
+    public static function getCountriesByName(): array
     {
         return Cache::remember('countries', 60 * 60 * 24, function () {
             $response = Http::get(static::$url . '/all', ['fields' => 'name']);
