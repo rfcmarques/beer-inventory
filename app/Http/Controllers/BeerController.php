@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBeerRequest;
+use App\Http\Requests\UpdateBeerRequest;
 use App\Models\Beer;
 use App\Models\Brewery;
 use App\Models\Style;
@@ -27,14 +29,9 @@ class BeerController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreBeerRequest $request)
     {
-        $validateData = $request->validate([
-            'name' => 'required',
-            'brewery_id' => 'required',
-            'style_id' => 'required',
-            'abv' => 'required'
-        ]);
+        $validateData = $request->validated();
 
         $newBeer = Beer::create($validateData);
 
@@ -50,14 +47,9 @@ class BeerController extends Controller
         ]);
     }
 
-    public function update(Beer $beer)
+    public function update(UpdateBeerRequest $request, Beer $beer)
     {
-        $validateData = request()->validate([
-            'name' => 'required',
-            'brewery_id' => 'required',
-            'style_id' => 'required',
-            'abv' => 'required'
-        ]);
+        $validateData = $request->validated();
 
         $beer->update($validateData);
 
