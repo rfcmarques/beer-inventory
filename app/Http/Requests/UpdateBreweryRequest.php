@@ -29,6 +29,9 @@ class UpdateBreweryRequest extends FormRequest
             'country' => [
                 'required',
                 'string'
+            ],
+            'logo' => [
+                'image'
             ]
         ];
     }

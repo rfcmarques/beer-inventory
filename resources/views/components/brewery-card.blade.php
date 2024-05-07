@@ -7,7 +7,8 @@
                     <p>{{ $brewery->country }}</p>
                 </div>
                 <div class="col">
-                    <img src="/imgs/hop.svg" class="img-fluid object-fit-contain" />
+                    <img src="{{ Storage::url($brewery->logo) ?? '/imgs/hop.svg' }}"
+                        class="img-fluid object-fit-contain" />
                 </div>
             </div>
         </div>

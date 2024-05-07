@@ -12,7 +12,7 @@ class Brewery extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'country'];
+    protected $fillable = ['name', 'country', 'logo'];
 
     public function beers()
     {
