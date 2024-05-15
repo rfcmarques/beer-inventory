@@ -1,6 +1,6 @@
 @props(['endpoint', 'method' => 'post'])
 
-<form action="{{ $endpoint }}" method="POST">
+<form action="{{ $endpoint }}" method="POST" enctype="multipart/form-data">
     @csrf
 
     @unless ($method === 'post')

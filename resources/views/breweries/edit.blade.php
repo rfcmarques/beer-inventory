@@ -17,6 +17,11 @@
                             @endforeach
                         </x-form.select>
                     </x-form.field>
+
+                    <x-form.field class="col-md-12">
+                        <x-form.label for="logo">Logo Image</x-form.label>
+                        <x-form.input name="logo" type="file" value="{{ old('logo') ?? $brewery->logo }}" />
+                    </x-form.field>
                 </div>
             </x-form.form>
         </x-card>

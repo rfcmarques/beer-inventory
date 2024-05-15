@@ -32,6 +32,10 @@ class BreweryController extends Controller
     {
         $validatedData = $request->validated();
 
+        if ($request->hasFile('logo')) {
+            $validatedData['logo'] = $request->file('logo')->store('public');
+        }
+
         $newBrewery = Brewery::create($validatedData);
 
         return redirect('/breweries')->with('success', "{$newBrewery->name} was created with success");
@@ -50,6 +54,10 @@ class BreweryController extends Controller
     public function update(UpdateBreweryRequest $request, Brewery $brewery)
     {
         $validatedData = $request->validated();
+
+        if ($request->hasFile('logo')) {
+            $validatedData['logo'] = $request->file('logo')->store('public');
+        }
 
         $brewery->update($validatedData);
 
