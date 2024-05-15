@@ -14,6 +14,17 @@
                 <x-navbar.link href="/breweries" :active="request()->is('/breweries')">Breweries</x-navbar.link>
                 <x-navbar.link href="/styles" :active="request()->is('/styles')">Styles</x-navbar.link>
             </ul>
+            @auth
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <form method="POST" action="/login">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-link nav-link">Log Out</button>
+                        </form>
+                    </li>
+                </ul>
+            @endauth
         </div>
     </div>
 </nav>
