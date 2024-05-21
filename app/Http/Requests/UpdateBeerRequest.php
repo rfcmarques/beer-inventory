@@ -11,7 +11,7 @@ class UpdateBeerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->user()->admin;
     }
 
     /**
