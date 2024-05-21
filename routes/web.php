@@ -12,6 +12,24 @@ Route::view('/', 'home.index');
 
 Route::resource('beers', BeerController::class)->except('show');
 
+Route::controller(StyleController::class)->group(function () {
+    Route::get('/styles', 'index');
+
+    Route::get('/styles/create', 'create')
+        ->can('create', 'App\Models\Style');
+
+    Route::post('/styles', 'store');
+
+    Route::get('/styles/{style}/edit', 'edit')
+        ->can('edit', 'style');
+
+    Route::put('/styles/{style}', 'update')
+        ->can('update', 'style');
+
+    Route::delete('/styles/{style}', 'delete')
+        ->can('delete', 'style');
+});
+
 Route::controller(BreweryController::class)->group(function () {
     Route::get('/breweries', 'index');
 
@@ -31,7 +49,6 @@ Route::controller(BreweryController::class)->group(function () {
 });
 
 Route::resource('items', ItemController::class)->except('show');
-Route::resource('styles', StyleController::class)->except('show');
 
 Route::controller(SessionController::class)->group(function () {
     Route::get('/login', 'create')->middleware('guest')->name('login');
