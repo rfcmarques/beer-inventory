@@ -64,7 +64,23 @@ Route::controller(BeerController::class)->group(function () {
         ->can('delete', 'beer');
 });
 
-Route::resource('items', ItemController::class)->except('show');
+Route::controller(ItemController::class)->group(function () {
+    Route::get('/items', 'index');
+
+    Route::get('/items/create', 'create')
+        ->can('create', 'App\Models\Item');
+
+    Route::post('/items', 'store');
+
+    Route::get('/items/{item}/edit', 'edit')
+        ->can('edit', 'item');
+
+    Route::put('/items/{item}', 'update')
+        ->can('update', 'item');
+
+    Route::delete('/items/{item}', 'delete')
+        ->can('delete', 'item');
+});
 
 Route::controller(SessionController::class)->group(function () {
     Route::get('/login', 'create')->middleware('guest')->name('login');
