@@ -56,9 +56,9 @@ class BackupDatabase extends Command
 
         // Save JSON to file
         $filename = 'backup_' . date('Y_m_d_H_i_s') . '.json';
-        Storage::disk('local')->put($filename, $jsonBackup);
+        Storage::disk('backups')->put($filename, $jsonBackup);
 
-        $this->info('Database backup created successfully!');
+        $this->provideFeedback($filename);
     }
 
     /**
@@ -70,5 +70,19 @@ class BackupDatabase extends Command
     private function tableExists($tableName)
     {
         return Schema::hasTable($tableName);
+    }
+
+    private function provideFeedback($filename): void
+    {
+        $this->line('');
+
+        $this->info("   \033[42m SUCCESS \033[0m Database backup created successfully!");
+
+        $this->line('');
+
+        $backupPath = Storage::url("app/backups/$filename");
+        $this->info("   \033[44m INFO \033[0m Backup is stored at \033[1m[<href=file://$backupPath>{$backupPath}]\033[0m</>");
+
+        $this->line('');
     }
 }
