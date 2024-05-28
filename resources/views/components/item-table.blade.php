@@ -7,6 +7,7 @@
         <th>Brewery</th>
         <th>Container</th>
         <th>Best By</th>
+        <th></th>
     </thead>
     <tbody class="table-group-divider">
         @foreach ($items as $item)
@@ -21,6 +22,15 @@
                 <td>{{ $item->container->type }} {{ $item->container->capacity }} ml</td>
                 <td title="{{ $item->expiration_date->format('Y-m-d') }}">
                     {{ $item->expiration_date->diffForHumans() }}
+                </td>
+                <td>
+                    <form action="/items/{{ $item->id }}/consume" method="post">
+                        @csrf
+                        @method('put')
+                        <button class="dropdown-item" type="submit">
+                            <i class="fa-solid fa-beer-mug-empty"></i>
+                        </button>
+                    </form>
                 </td>
             </tr>
         @endforeach
