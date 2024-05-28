@@ -24,7 +24,7 @@ Route::controller(StyleController::class)->group(function () {
     Route::put('/styles/{style}', 'update')
         ->can('update', 'style');
 
-    Route::delete('/styles/{style}', 'delete')
+    Route::delete('/styles/{style}', 'destroy')
         ->can('delete', 'style');
 });
 
@@ -42,7 +42,7 @@ Route::controller(BreweryController::class)->group(function () {
     Route::put('/breweries/{brewery}', 'update')
         ->can('update', 'brewery');
 
-    Route::delete('/breweries/{brewery}', 'delete')
+    Route::delete('/breweries/{brewery}', 'destroy')
         ->can('delete', 'brewery');
 });
 
@@ -60,7 +60,7 @@ Route::controller(BeerController::class)->group(function () {
     Route::put('/beers/{beer}', 'update')
         ->can('update', 'beer');
 
-    Route::delete('/beers/{beer}', 'delete')
+    Route::delete('/beers/{beer}', 'destroy')
         ->can('delete', 'beer');
 });
 
@@ -78,7 +78,7 @@ Route::controller(ItemController::class)->group(function () {
     Route::put('/items/{item}', 'update')
         ->can('update', 'item');
 
-    Route::delete('/items/{item}', 'delete')
+    Route::delete('/items/{item}', 'destroy')
         ->can('delete', 'item');
 });
 
