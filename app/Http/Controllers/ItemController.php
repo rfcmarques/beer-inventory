@@ -14,7 +14,7 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $items = Cache::rememberForever('items', fn () => Item::all());
+        $items = Cache::rememberForever('items', fn () => Item::available());
 
         return view('items.index', [
             'items' => $items
