@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BeerController;
 use App\Http\Controllers\BreweryController;
+use App\Http\Controllers\ItemConsumedController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\StyleController;
@@ -81,6 +82,11 @@ Route::controller(ItemController::class)->group(function () {
     Route::delete('/items/{item}', 'destroy')
         ->can('delete', 'item');
 });
+
+Route::prefix('items')->group(function () {
+    Route::put('/{item}/consume', ItemConsumedController::class);
+});
+
 
 Route::controller(SessionController::class)->group(function () {
     Route::get('/login', 'create')->middleware('guest')->name('login');

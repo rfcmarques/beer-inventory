@@ -12,11 +12,20 @@ class Item extends Model
 {
     use HasFactory;
 
-    protected $with = ['beer', 'container'];
+    protected $with = [
+        'beer',
+        'container'
+    ];
 
-    protected $fillable = ['beer_id', 'expiration_date', 'container_id'];
+    protected $fillable = [
+        'beer_id',
+        'expiration_date',
+        'container_id',
+        'consumed_at'
+    ];
 
     protected $casts = [
+        'consumed_at' => 'datetime:Y-m-d',
         'expiration_date' => 'datetime:Y-m-d'
     ];
 
@@ -28,5 +37,10 @@ class Item extends Model
     public function container()
     {
         return $this->belongsTo(Container::class);
+    }
+
+    public static function available()
+    {
+        return Item::where('consumed_at', null)->get();
     }
 }

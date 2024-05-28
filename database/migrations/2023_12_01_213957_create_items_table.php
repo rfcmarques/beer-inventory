@@ -19,6 +19,7 @@ return new class extends Migration
                 ->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Container::class)
                 ->nullable()->constrained()->nullOnDelete();
+            $table->timestamp('consumed_at')->nullable();
             $table->timestamp('expiration_date');
             $table->timestamps();
         });
