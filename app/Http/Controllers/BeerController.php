@@ -23,8 +23,8 @@ class BeerController extends Controller
     public function create()
     {
         return view('beers.create', [
-            'styles' => Style::select('id', 'name')->get(),
-            'breweries' => Brewery::select('id', 'name')->get()
+            'styles' => Style::select('id', 'name')->orderBy('name')->get(),
+            'breweries' => Brewery::select('id', 'name')->orderBy('name')->get()
         ]);
     }
 
@@ -41,8 +41,8 @@ class BeerController extends Controller
     {
         return view('beers.edit', [
             'beer' => $beer,
-            'styles' => Style::select('id', 'name')->get(),
-            'breweries' => Brewery::select('id', 'name')->get()
+            'styles' => Style::select('id', 'name')->orderBy('name')->get(),
+            'breweries' => Brewery::select('id', 'name')->orderBy('name')->get()
         ]);
     }
 
