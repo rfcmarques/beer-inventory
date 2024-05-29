@@ -12,7 +12,7 @@ class BreweryController extends Controller
 {
     public function index()
     {
-        $breweries = Cache::rememberForever('breweries', fn () => Brewery::all());
+        $breweries = Cache::rememberForever('breweries', fn () => Brewery::orderBy('name')->get());
 
         return view('breweries.index', [
             'breweries' => $breweries
