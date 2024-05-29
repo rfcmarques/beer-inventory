@@ -1,3 +1,5 @@
+@props(['style'])
+
 <div class="col-lg-4 col-md-6 mb-4">
     <div class="card rounded-4 border-4 border-warning shadow-sm mb-3 h-100">
         <div class="card-body p-0">
