@@ -1,27 +1,24 @@
 <x-layout>
     <x-container title="Create Brewery">
         <x-card>
-            <x-form.form endpoint="/breweries">
+            <x-form.form action="/breweries" enctype="multipart/form-data">
                 <div class="row">
-                    <x-form.field>
-                        <x-form.label for="name">Name</x-form.label>
-                        <x-form.input name="name" value="{{ old('name') }}" />
-                    </x-form.field>
+                    <div class="col-md-6 mb-3">
+                        <x-form.input label="Name" name="name" />
+                    </div>
 
-                    <x-form.field>
-                        <x-form.label for="name">Country</x-form.label>
-
-                        <x-form.select name="country">
+                    <div class="col-md-6 mb-3">
+                        <x-form.select label="Country" name="country">
                             @foreach ($countries as $country)
                                 <x-form.option :value="$country" :text="$country"
                                     selectedValue="{{ old('country') }}" />
                             @endforeach
                         </x-form.select>
-                    </x-form.field>
-                    <x-form.field class="col-md-12">
-                        <x-form.label for="logo">Logo Image</x-form.label>
-                        <x-form.input name="logo" type="file" value="{{ old('logo') }}" />
-                    </x-form.field>
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <x-form.input label="Logo Image" name="logo" type="file" />
+                    </div>
                 </div>
             </x-form.form>
         </x-card>

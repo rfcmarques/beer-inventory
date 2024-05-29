@@ -1,27 +1,24 @@
 <x-layout>
     <x-container title="Edit Brewery">
         <x-card>
-            <x-form.form endpoint="/breweries/{{ $brewery->id }}" method="put">
+            <x-form.form action="/breweries/{{ $brewery->id }}" method="put" enctype="multipart/form-data">
                 <div class="row">
-                    <x-form.field>
-                        <x-form.label for="name">Name</x-form.label>
-                        <x-form.input name="name" value="{{ old('name') ?? $brewery->name }}" />
-                    </x-form.field>
+                    <div class="col-md-6 mb-3">
+                        <x-form.input label="Name" name="name" :value="$brewery->name" />
+                    </div>
 
-                    <x-form.field>
-                        <x-form.label for="name">Country</x-form.label>
-                        <x-form.select name="country" label="Country">
+                    <div class="col-md-6 mb-3">
+                        <x-form.select label="Country" name="country">
                             @foreach ($countries as $country)
-                                <x-form.option value="{{ $country }}" text="{{ $country }}"
-                                    selectedValue="{{ old('country') ?? $brewery->country }}" />
+                                <x-form.option :value="$country" :text="$country"
+                                    selectedValue="{{ $brewery->country }}" />
                             @endforeach
                         </x-form.select>
-                    </x-form.field>
+                    </div>
 
-                    <x-form.field class="col-md-12">
-                        <x-form.label for="logo">Logo Image</x-form.label>
-                        <x-form.input name="logo" type="file" value="{{ old('logo') ?? $brewery->logo }}" />
-                    </x-form.field>
+                    <div class="col-md-12 mb-3">
+                        <x-form.input label="Logo Image" name="logo" type="file" :value="$brewery->logo" />
+                    </div>
                 </div>
             </x-form.form>
         </x-card>

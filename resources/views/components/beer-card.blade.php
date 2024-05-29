@@ -1,3 +1,5 @@
+@props(['beer'])
+
 <div class="row mb-3">
     <div class="col-12">
         <div class="card card border shadow">

@@ -1,37 +1,34 @@
 <x-layout>
     <x-container title="Edit Beer">
         <x-card>
-            <x-form.form endpoint="/beers/{{ $beer->id }}" method="put">
+            <x-form.form action="/beers/{{ $beer->id }}" method="put">
                 <div class="row">
-                    <x-form.field>
-                        <x-form.label for="name">Name</x-form.label>
-                        <x-form.input name="name" value="{{ old('name') ?? $beer->name }}" />
-                    </x-form.field>
 
-                    <x-form.field>
-                        <x-form.label for="brewery_id">Brewery</x-form.label>
-                        <x-form.select name="brewery_id">
-                            @foreach ($breweries as $key => $brewery)
+                    <div class="col-md-6 mb-3">
+                        <x-form.input label="Name" name="name" :value="$beer->name" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <x-form.select label="Brewery" name="brewery_id">
+                            @foreach ($breweries as $brewery)
                                 <x-form.option value="{{ $brewery->id }}" text="{{ $brewery->name }}"
-                                    selectedValue="{{ old('brewery_id') ?? $beer->brewery->id }}" />
+                                    selectedValue="{{ $beer->brewery->id }}" />
                             @endforeach
                         </x-form.select>
-                    </x-form.field>
+                    </div>
 
-                    <x-form.field>
-                        <x-form.label for="style_id">Style</x-form.label>
-                        <x-form.select name="style_id">
-                            @foreach ($styles as $key => $style)
+                    <div class="col-md-6 mb-3">
+                        <x-form.select label="Style" name="style_id">orderBy('name')
+                            @foreach ($styles as $style)
                                 <x-form.option value="{{ $style->id }}" text="{{ $style->name }}"
-                                    selectedValue="{{ old('style_id') ?? $beer->style->id }}" />
+                                    selectedValue="{{ $beer->style->id }}" />
                             @endforeach
                         </x-form.select>
-                    </x-form.field>
+                    </div>
 
-                    <x-form.field>
-                        <x-form.label for="abv">ABV (%)</x-form.label>
-                        <x-form.input type="number" name="abv" value="{{ old('abv') ?? $beer->abv }}" />
-                    </x-form.field>
+                    <div class="col-md-6 mb-3">
+                        <x-form.input label="ABV (%)" type="number" name="abv" :value="$beer->abv" />
+                    </div>
                 </div>
             </x-form.form>
         </x-card>

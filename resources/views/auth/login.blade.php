@@ -4,16 +4,14 @@
             <h3 class="text-center fw-bold">Login</h3>
 
             <div class="px-5 py-3">
-                <x-form.form endpoint="/login">
-                    <x-form.field class="col-md-12">
-                        <x-form.label for="email">Email</x-form.label>
-                        <x-form.input name="email" value="{{ old('email') }}" />
-                    </x-form.field>
+                <x-form.form action="/login">
+                    <div class="col-md-12 mb-3">
+                        <x-form.input label="Email" name="email" value="{{ old('email') }}" />
+                    </div>
 
-                    <x-form.field class="col-md-12">
-                        <x-form.label for="password">Password</x-form.label>
-                        <x-form.input name="password" type="password" value="" />
-                    </x-form.field>
+                    <div class="col-md-12 mb-3">
+                        <x-form.input label="Password" name="password" type="password" value="" />
+                    </div>
 
                 </x-form.form>
             </div>

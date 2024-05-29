@@ -1,3 +1,5 @@
+@props(['brewery'])
+
 <div class="col-md-4 mb-3">
     <div class="card border shadow-sm h-100">
         <div class="card-body">
@@ -19,7 +21,8 @@
             <div class="card-footer border-0 p-0 mx-0 text-bg-light">
                 <div class="d-grid">
                     <div class="btn-group" role="group">
-                        <button class="btn btn-light border-top border-end text-danger text-opacity-75" form="delete-form">
+                        <button class="btn btn-light border-top border-end text-danger text-opacity-75"
+                            form="delete-form-{{ $brewery->id }}">
                             Delete
                         </button>
                         <a href="/breweries/{{ $brewery->id }}/edit"
@@ -32,8 +35,10 @@
         @endcan
     </div>
 
-    <form method="POST" action="/breweries/{{ $brewery->id }}" id="delete-form" class="d-none">
-        @csrf
-        @method('delete')
-    </form>
+    @can('delete', $brewery)
+        <form method="POST" action="/breweries/{{ $brewery->id }}" id="delete-form-{{ $brewery->id }}" class="d-none">
+            @csrf
+            @method('delete')
+        </form>
+    @endcan
 </div>

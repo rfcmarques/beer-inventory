@@ -1,13 +1,11 @@
 @props(['endpoint', 'method' => 'post'])
 
-<form action="{{ $endpoint }}" method="POST" enctype="multipart/form-data">
+<form {{ $attributes->merge(['method' => 'POST']) }}>
     @csrf
 
     @unless ($method === 'post')
         @method($method)
     @endunless
-
-    <x-form.error-msg />
 
     {{ $slot }}
 
