@@ -13,7 +13,7 @@ class ItemConsumedController extends Controller
     public function __invoke(Request $request, Item $item)
     {
         $item->update([
-            'consumed_at' => now()
+            'consumed_at' => $request->consumed_at ?? now()
         ]);
 
         return redirect('/items')
