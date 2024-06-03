@@ -3,9 +3,9 @@
     <x-success-msg />
 
     <x-container title="Inventory" :button="['endpoint' => '/items/create', 'text' => 'Add']">
-        <x-item-card>
+        <x-card class="border shadow py-3 px-4">
             <x-item-table :items="$items" />
-        </x-item-card>
+        </x-card>
     </x-container>
 
 </x-layout>
