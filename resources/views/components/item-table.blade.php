@@ -24,15 +24,25 @@
                     {{ $item->expiration_date->diffForHumans() }}
                 </td>
                 <td>
-                    <form action="/items/{{ $item->id }}/consume" method="post">
-                        @csrf
-                        @method('put')
-                        <button class="dropdown-item" type="submit">
+                    @can('update', $item)
+                        <x-modal-button class="btn" target="#modal{{ $item->id }}">
                             <i class="fa-solid fa-beer-mug-empty"></i>
-                        </button>
-                    </form>
+                        </x-modal-button>
+                    @endcan
                 </td>
             </tr>
+
+            @can('update', $item)
+                <x-modal id="modal{{ $item->id }}">
+                    <x-slot:header>Register new consumption</x-slot:header>
+
+                    <x-form.form action="/items/{{ $item->id }}/consume" method="put">
+                        <div class="mb-3">
+                            <x-form.input class="mb-3" label="Date of Consumption" name="consumed_at" type="date" />
+                        </div>
+                    </x-form.form>
+                </x-modal>
+            @endcan
         @endforeach
     </tbody>
 </table>
