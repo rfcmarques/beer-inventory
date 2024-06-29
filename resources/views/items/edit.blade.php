@@ -18,10 +18,6 @@
                     </div>
 
                     <div class="col-md-6 mb-3">
-                        <x-form.input label="Quantity" type="number" name="quantity" value="{{ $item->quantity }}" />
-                    </div>
-
-                    <div class="col-md-6 mb-3">
                         <x-form.select label="Container" name="container_id">
                             @foreach ($containers as $container)
                                 <x-form.option value="{{ $container->id }}"
