@@ -3,10 +3,10 @@
 
     <div class="row mt-4 mb-5">
         <div class="col-3">
-            <div class="card shadow border-1 border-primary bg-primary bg-gradient text-white">
+            <div class="card shadow border-1">
                 <div class="card-body bg-text-info">
                     <h3 class="card-title">Items</h3>
-                    <h5>{{ \App\Models\Item::all()->count() }}</h5>
+                    <h5>{{ App\Models\Item::all()->count() }}</h5>
                 </div>
             </div>
         </div>
@@ -39,22 +39,24 @@
     <div class="row">
         <div class="col-12">
             <h3>Items</h3>
-            <p>You have a total of {{ \App\Models\Item::all()->count() }} different items in your inventory</p>
-            <p>The following items will reach their best before date soon</p>
+            <p>You have a total of {{ \App\Models\Item::available()->count() }} different items available in your
+                inventory</p>
+            <p>The following items will reach their best before date soon:</p>
             <ul>
-                <li>ABC</li>
-                <li>ABC</li>
-                <li>ABC</li>
-                <li>ABC</li>
-                <li>ABC</li>
+                @foreach (\App\Models\Item::expiringSoon()->limit(5)->get() as $item)
+                    <li>{{ $item->beer->name }}</li>
+                @endforeach
             </ul>
+            <p>You already consumed {{ \App\Models\Item::consumed()->count() }} items form your inventory</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-12">
             <h3>Beers</h3>
-            <p>You have a total of {{ \App\Models\Beer::all()->count() }} different beers</p>
+            <p>You have a total of {{ \App\Models\Beer::all()->count() }} different beers,
+                {{ \App\Models\Beer::consumed()->count() }} of wich were consumed once and
+                {{ \App\Models\Beer::available()->count() }} are still available</p>
         </div>
     </div>
 
