@@ -14,7 +14,9 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $items = Cache::rememberForever('items', fn () => Item::available());
+        $items = Item::available()
+            ->orderBy('expiration_date', 'asc')
+            ->get(); //->paginate(15);
 
         return view('items.index', [
             'items' => $items
