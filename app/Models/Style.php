@@ -22,16 +22,38 @@ class Style extends Model
         return $this->hasMany(Beer::class);
     }
 
+    /**
+     * Scope a query to include 
+     * styles with available items.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
     public function scopeWithAvailableItems(Builder $query): Builder
     {
         return $query->whereHas('beers.items', fn ($query) => $query->available());
     }
 
+    /**
+     * Scope a query to include 
+     * styles with consumed items.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
     public function scopeWithConsumedItems(Builder $query)
     {
         return $query->whereHas('beers.items', fn ($query) => $query->consumed());
     }
 
+    /**
+     * Scope a query to include 
+     * the count of available beers 
+     * for each style.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
     public function scopeWithAvailableBeersCount(Builder $query): Builder
     {
         return $query->withCount([
@@ -39,6 +61,14 @@ class Style extends Model
         ]);
     }
 
+    /**
+     * Scope a query to include 
+     * the count of consumed beers 
+     * for each style.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
     public function scopeWithConsumedBeersCount(Builder $query): Builder
     {
         return $query->withCount([
@@ -46,6 +76,14 @@ class Style extends Model
         ]);
     }
 
+    /**
+     * Scope a query to include 
+     * the count of available items 
+     * for each style.
+     *
+     * @param Builder $query
+     * @return Collection
+     */
     public function scopeWithAvailableItemsCount(Builder $query): Collection
     {
         return $query->with(['beers' => fn ($query) => $query->quantityAvailable()])
@@ -54,6 +92,14 @@ class Style extends Model
             });
     }
 
+    /**
+     * Scope a query to include 
+     * the count of consumed items 
+     * for each style.
+     *
+     * @param Builder $query
+     * @return Collection
+     */
     public function scopeWithConsumedItemsCount(Builder $query): Collection
     {
         return $query->with(['beers' => fn ($query) => $query->quantityConsumed()])
