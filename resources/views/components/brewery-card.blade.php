@@ -1,7 +1,7 @@
 @props(['brewery'])
 
 <div class="col-md-4 mb-3">
-    <div class="card border shadow-sm h-100">
+    <div class="card border shadow-sm h-100" style="max-height: 300px">
         <div class="card-body">
             <div class="d-flex flex-row align-items-center h-100">
                 <div class="col me-5">
@@ -12,8 +12,7 @@
                     @php
                         $logoUrl = $brewery->logo ? Storage::url($brewery->logo) : '/imgs/hop.svg';
                     @endphp
-
-                    <img src="{{ $logoUrl }}" class="img-fluid object-fit-contain" />
+                    <img src="{{ $logoUrl }}" class="img-fluid object-fit-contain" style="height: 150px" />
                 </div>
             </div>
         </div>

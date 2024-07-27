@@ -5,8 +5,17 @@
         <div class="col-3">
             <div class="card shadow border-1">
                 <div class="card-body bg-text-info">
-                    <h3 class="card-title">Items</h3>
-                    <h5>{{ App\Models\Item::all()->count() }}</h5>
+                    <h1 class="card-title mb-3">Items</h1>
+                    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <h3>{{ App\Models\Item::available()->count() }} available</h3>
+                            </div>
+                            <div class="carousel-item">
+                                <h5>{{ App\Models\Item::consumed()->count() }} consumed</h5>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

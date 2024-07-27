@@ -9,10 +9,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <x-navbar.link href="/items" :active="request()->is('/items')">Inventory</x-navbar.link>
-                <x-navbar.link href="/beers" :active="request()->is('/beers')">Beers</x-navbar.link>
-                <x-navbar.link href="/breweries" :active="request()->is('/breweries')">Breweries</x-navbar.link>
-                <x-navbar.link href="/styles" :active="request()->is('/styles')">Styles</x-navbar.link>
+                <x-navbar.link href="/items" :active="request()->is('items')">Inventory</x-navbar.link>
+                <x-navbar.link href="/beers" :active="request()->is('beers')">Beers</x-navbar.link>
+                <x-navbar.link href="/breweries" :active="request()->is('breweries')">Breweries</x-navbar.link>
+                <x-navbar.link href="/styles" :active="request()->is('styles')">Styles</x-navbar.link>
             </ul>
             @auth
                 <ul class="navbar-nav ms-auto">

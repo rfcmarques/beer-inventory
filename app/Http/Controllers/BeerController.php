@@ -13,11 +13,7 @@ class BeerController extends Controller
 {
     public function index()
     {
-        $beers = Cache::rememberForever('beers', fn () => Beer::all());
-
-        return view('beers.index', [
-            'beers' => $beers,
-        ]);
+        return view('beers.index');
     }
 
     public function create()

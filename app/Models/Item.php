@@ -41,6 +41,24 @@ class Item extends Model
         return $this->belongsTo(Container::class);
     }
 
+    public function scopeSearch(Builder $query, string $value): Builder
+    {
+        return $query->with('beer')
+            ->whereHas('beer', function ($q) use ($value) {
+                $q->where('name', 'like', "%{$value}%");
+            })
+            ->orWhereHas('beer', function ($q) use ($value) {
+                $q->whereHas('brewery', function ($q) use ($value) {
+                    $q->where('name', 'like', "%{$value}%");
+                });
+            })
+            ->orWhereHas('beer', function ($q) use ($value) {
+                $q->whereHas('style', function ($q) use ($value) {
+                    $q->where('name', 'like', "%{$value}%");
+                });
+            });
+    }
+
     /**
      * Scope a query to only 
      * include available items.
@@ -95,7 +113,7 @@ class Item extends Model
             ->groupBy('beer_id', 'expiration_date', 'container_id');
     }
 
-     /**
+    /**
      * Scope a query to include 
      * the count of consumed items 
      * grouped by beer, container, 

@@ -84,7 +84,7 @@ Route::controller(ItemController::class)->group(function () {
 });
 
 Route::prefix('items')->group(function () {
-    Route::put('/{item}/consume', ItemConsumedController::class);
+    Route::put('/{item}/consume', ItemConsumedController::class)->name('consume');
 });
 
 

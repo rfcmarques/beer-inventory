@@ -1,7 +1,7 @@
 <x-layout>
     <x-container title="Create Item">
         <x-card>
-            <x-form.form action="/items">
+            <x-form.form action="/items/{{ $item->id }}" method="put">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <x-form.select label="Beer" name="beer_id">
