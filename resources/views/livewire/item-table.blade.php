@@ -22,31 +22,46 @@
             <th wire:click="doSort('beer_name')">
                 <div class="d-flex">
                     Beer
-                    <span class="ms-auto"><i class="fa-solid fa-chevron-up"></i></span>
+                    @if ($sortColumn === 'beer_name')
+                        <span class="ms-auto"><i
+                                class="fa-solid {{ $sortDirection === 'asc' ? 'fa-chevron-up' : 'fa-chevron-down' }}"></i></span>
+                    @endif
                 </div>
             </th>
             <th wire:click="doSort('beer_style')">
                 <div class="d-flex">
                     Style
-                    <span class="ms-auto"><i class="fa-solid fa-chevron-up"></i></span>
+                    @if ($sortColumn === 'beer_style')
+                        <span class="ms-auto"><i
+                                class="fa-solid {{ $sortDirection === 'asc' ? 'fa-chevron-up' : 'fa-chevron-down' }}"></i></span>
+                    @endif
                 </div>
             </th>
             <th wire:click="doSort('beer_brewery')">
                 <div class="d-flex">
                     Brewery
-                    <span class="ms-auto"><i class="fa-solid fa-chevron-up"></i></span>
+                    @if ($sortColumn === 'beer_brewery')
+                        <span class="ms-auto"><i
+                                class="fa-solid {{ $sortDirection === 'asc' ? 'fa-chevron-up' : 'fa-chevron-down' }}"></i></span>
+                    @endif
                 </div>
             </th>
             <th wire:click="doSort('container_id')">
                 <div class="d-flex">
                     Container
-                    <span class="ms-auto"><i class="fa-solid fa-chevron-up"></i></span>
+                    @if ($sortColumn === 'container_id')
+                        <span class="ms-auto"><i
+                                class="fa-solid {{ $sortDirection === 'asc' ? 'fa-chevron-up' : 'fa-chevron-down' }}"></i></span>
+                    @endif
                 </div>
             </th>
             <th wire:click="doSort('expiration_date')">
                 <div class="d-flex">
                     Best Before
-                    <span class="ms-auto"><i class="fa-solid fa-chevron-up"></i></span>
+                    @if ($sortColumn === 'expiration_date')
+                        <span class="ms-auto"><i
+                                class="fa-solid {{ $sortDirection === 'asc' ? 'fa-chevron-up' : 'fa-chevron-down' }}"></i></span>
+                    @endif
                 </div>
             </th>
             <th></th>
