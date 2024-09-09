@@ -20,13 +20,15 @@ class CountriesAPIService
 
                 $countries = array_values(Arr::sort(
                     Arr::map($json, function ($country) {
-                        return $country['name']['common'];
+                        return [
+                            'id' => $country['name']['common'],
+                            'name' => $country['name']['common'],
+                        ];
                     })
                 ));
 
                 return $countries;
             }
-
             return [];
         });
     }
