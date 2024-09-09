@@ -9,21 +9,13 @@
                     </div>
 
                     <div class="col-md-6 mb-3">
-                        <x-form.select label="Brewery" name="brewery_id">
-                            @foreach ($breweries as $brewery)
-                                <x-form.option value="{{ $brewery->id }}" text="{{ $brewery->name }}"
-                                    selectedValue="{{ $beer->brewery->id }}" />
-                            @endforeach
-                        </x-form.select>
+                        <x-form.label label="Brewery" name="brewery_id" />
+                        <livewire:searchable-select :options="$breweries" :selectedOption="$beer->brewery->id ?? null" name="brewery_id" />
                     </div>
 
                     <div class="col-md-6 mb-3">
-                        <x-form.select label="Style" name="style_id">orderBy('name')
-                            @foreach ($styles as $style)
-                                <x-form.option value="{{ $style->id }}" text="{{ $style->name }}"
-                                    selectedValue="{{ $beer->style->id }}" />
-                            @endforeach
-                        </x-form.select>
+                        <x-form.label label="Style" name="style_id" />
+                        <livewire:searchable-select :options="$styles" :selectedOption="$beer->style->id ?? null" name="brewery_id" />
                     </div>
 
                     <div class="col-md-6 mb-3">

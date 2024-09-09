@@ -8,12 +8,8 @@
                     </div>
 
                     <div class="col-md-6 mb-3">
-                        <x-form.select label="Country" name="country">
-                            @foreach ($countries as $country)
-                                <x-form.option :value="$country" :text="$country"
-                                    selectedValue="{{ $brewery->country }}" />
-                            @endforeach
-                        </x-form.select>
+                        <x-form.label label="Country" name="country" />
+                        <livewire:searchable-select :options="$countries" :selectedOption="$brewery->country ?? null" name="country" />
                     </div>
 
                     <div class="col-md-12 mb-3">
