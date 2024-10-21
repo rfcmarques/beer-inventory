@@ -27,6 +27,7 @@ class ContainerFactory extends Factory
                 ['type' => 'Can', 'capacity' => 355],
                 ['type' => 'Can', 'capacity' => 440],
                 ['type' => 'Can', 'capacity' => 473],
+                ['type' => 'Can', 'capacity' => 500],
                 ['type' => 'Bottle', 'capacity' => 250],
                 ['type' => 'Bottle', 'capacity' => 330],
                 ['type' => 'Bottle', 'capacity' => 375],
