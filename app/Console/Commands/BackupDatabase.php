@@ -42,7 +42,7 @@ class BackupDatabase extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $backupData = $this->option('table')
             ? $this->getTableData($this->option('table'))
@@ -107,7 +107,7 @@ class BackupDatabase extends Command
      * @param string $tableName
      * @return bool
      */
-    private function tableExists($tableName)
+    private function tableExists($tableName): bool
     {
         return Schema::hasTable($tableName);
     }
