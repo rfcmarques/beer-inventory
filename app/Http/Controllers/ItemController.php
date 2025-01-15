@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ContainerType;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
 use App\Models\Beer;
@@ -25,7 +26,10 @@ class ItemController extends Controller
 
     public function create()
     {
-        $containers = Cache::rememberForever('containers', fn () => Container::all());
+        $containers = Cache::rememberForever(
+            'containers',
+            fn() => Container::all()->sortBy('label')
+        );
 
         $beers = Cache::get('beers')
             ?? Beer::select(['id', 'name'])->get();
@@ -54,8 +58,10 @@ class ItemController extends Controller
         $beers = Cache::get('beers')
             ?? Beer::select(['id', 'name'])->get();
 
-        $containers = Cache::get('containers')
-            ?? Container::select(['id', 'name'])->get();
+        $containers = Cache::get('containers') ?? Cache::rememberForever(
+            'containers',
+            fn() => Container::all()->sortBy('label')
+        );;
 
         return view('items.edit', [
             'item' => $item,

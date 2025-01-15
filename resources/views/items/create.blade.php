@@ -20,8 +20,7 @@
                     <div class="col-md-6 mb-3">
                         <x-form.select label="Container" name="container_id">
                             @foreach ($containers as $container)
-                                <x-form.option value="{{ $container->id }}"
-                                    text="{{ $container->type . ' ' . $container->capacity . ' ml' }}"
+                                <x-form.option value="{{ $container->id }}" text="{{ $container->label }}"
                                     selectedValue="{{ old('container_id') }}" />
                             @endforeach
                         </x-form.select>

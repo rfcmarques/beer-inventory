@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ContainerType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -14,6 +15,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Container extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['type', 'capacity'];
+
+    protected $appends = ['label'];
+
+    protected function getLabelAttribute(): string
+    {
+        return ContainerType::from(strtolower($this->type))->label($this->capacity);
+    }
 
     public function items(): HasMany
     {
@@ -29,7 +39,7 @@ class Container extends Model
      */
     public function scopeWithAvailableItemsCount(Builder $query): Collection
     {
-        return $query->with(['items' => fn ($query) => $query->quantityAvailable()])
+        return $query->with(['items' => fn($query) => $query->quantityAvailable()])
             ->get()->each(function ($container) {
                 $container->available_items = $container->items->sum('quantity_available');
             });
@@ -44,7 +54,7 @@ class Container extends Model
      */
     public function scopeWithConsumedItemsCount(Builder $query): Collection
     {
-        return $query->with(['items' => fn ($query) => $query->quantityConsumed()])
+        return $query->with(['items' => fn($query) => $query->quantityConsumed()])
             ->get()->each(function ($container) {
                 $container->consumed_items = $container->items->sum('quantity_consumed');
             });
