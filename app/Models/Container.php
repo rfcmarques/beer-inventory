@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use App\Observers\ContainerObserver;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -18,11 +19,11 @@ class Container extends Model
 
     protected $fillable = ['type', 'capacity'];
 
-    protected $appends = ['label'];
-
-    protected function getLabelAttribute(): string
+    protected function label(): Attribute
     {
-        return ContainerType::from(strtolower($this->type))->label($this->capacity);
+        return new Attribute(
+            get: fn() => ContainerType::from(strtolower($this->type))->label($this->capacity)
+        );
     }
 
     public function items(): HasMany
