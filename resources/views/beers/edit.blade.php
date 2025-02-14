@@ -15,7 +15,7 @@
 
                     <div class="col-md-6 mb-3">
                         <x-form.label label="Style" name="style_id" />
-                        <livewire:searchable-select :options="$styles" :selectedOption="$beer->style->id ?? null" name="brewery_id" />
+                        <livewire:searchable-select :options="$styles" :selectedOption="$beer->style->id ?? null" name="style_id" />
                     </div>
 
                     <div class="col-md-6 mb-3">
