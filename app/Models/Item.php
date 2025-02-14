@@ -94,7 +94,20 @@ class Item extends Model
     public function scopeExpiringSoon($query): Builder
     {
         return $query->available()
-            ->where('expiration_date', '<', now()->addMonth());
+            ->where('expiration_date', '>=', now()->subWeeks(2))
+            ->orderBy('expiration_date', 'asc');
+    }
+
+    /**
+     * Scope a query to order items by the last consumed date.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeLastConsumed(Builder $query): Builder
+    {
+        return $query->consumed()
+            ->orderBy('consumed_at', 'desc');
     }
 
     /**
