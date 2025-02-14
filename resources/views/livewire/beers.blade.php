@@ -58,9 +58,15 @@
             <input type="text" class="form-control mb-3" placeholder="Search..." wire:model.live="search">
 
             <div class="overflow-x-hidden px-2" style="max-height: 80vh; overflow-y: auto">
-                @foreach ($beers as $beer)
+                @forelse ($beers as $beer)
                     <x-beer-card :$beer />
-                @endforeach
+                @empty
+                    <div class="text-center">
+                        <p class="text-muted">
+                            No beers found. Try removing some filters.
+                        </p>
+                    </div>
+                @endforelse
                 <div x-intersect="$wire.load()">
                     &nbsp;
                 </div>
