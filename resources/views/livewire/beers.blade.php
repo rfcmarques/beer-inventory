@@ -14,10 +14,10 @@
                     <div class="accordion-body" style="max-height: 200px; overflow-y: auto">
                         <ul class="list-unstyled lh-lg">
                             @foreach ($breweries as $brewery)
-                                <li class="">
+                                <li wire:key="{{ $brewery->id }}">
                                     <input class="form-check-input" type="checkbox" value="{{ $brewery->id }}"
-                                        id="flexCheckChecked" wire:model.live="selectedBreweries">
-                                    <label class="form-check-label" for="flexCheckChecked">
+                                        id="brewery-{{ $brewery->id }}" wire:model.live="selectedBreweries">
+                                    <label class="form-check-label" for="brewery-{{ $brewery->id }}">
                                         {{ $brewery->name }}
                                     </label>
                                 </li>
@@ -38,10 +38,10 @@
                     <div class="accordion-body" style="max-height: 200px; overflow-y: auto">
                         <ul class="list-unstyled lh-lg">
                             @foreach ($styles as $style)
-                                <li>
+                                <li wire:key="{{ $style->id }}">
                                     <input class="form-check-input" type="checkbox" value="{{ $style->id }}"
-                                        id="flexCheckChecked" wire:model.live="selectedStyles">
-                                    <label class="form-check-label" for="flexCheckChecked">
+                                        id="style-{{ $style->id }}" wire:model.live="selectedStyles">
+                                    <label class="form-check-label" for="style-{{ $style->id }}">
                                         {{ $style->name }}
                                     </label>
                                 </li>
