@@ -1,19 +1,23 @@
 <div class="row">
-    <div class="col-md-3">
+    <div class="w-25">
         <h4 class="mb-3">Filters</h4>
 
         <div class="accordion accordion-flush" id="accordionFlushExample">
-            <div class="accordion-item" wire:ignore>
+            <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <button class="accordion-button {{ $openAccordions['breweries'] ? '' : 'collapsed' }}"
+                        wire:click="toggleAccordion('breweries')" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseBreweries"
+                        aria-expanded="{{ $openAccordions['breweries'] ? 'true' : 'false' }}"
+                        aria-controls="flush-collapseBreweries">
                         Breweries
                     </button>
                 </h2>
-                <div id="flush-collapseOne" class="accordion-collapse collapse">
+                <div id="flush-collapseBreweries"
+                    class="accordion-collapse collapse {{ $openAccordions['breweries'] ? 'show' : '' }}">
                     <div class="accordion-body" style="max-height: 200px; overflow-y: auto">
                         <ul class="list-unstyled lh-lg">
-                            @foreach ($breweries as $brewery)
+                            @forelse ($breweries as $brewery)
                                 <li wire:key="{{ $brewery->id }}">
                                     <input class="form-check-input" type="checkbox" value="{{ $brewery->id }}"
                                         id="brewery-{{ $brewery->id }}" wire:model.live="selectedBreweries">
@@ -21,23 +25,31 @@
                                         {{ $brewery->name }}
                                     </label>
                                 </li>
-                            @endforeach
+                            @empty
+                                <li>
+                                    No breweries found.
+                                </li>
+                            @endforelse
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <div class="accordion-item" wire:ignore>
+            <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    <button class="accordion-button {{ $openAccordions['styles'] ? '' : 'collapsed' }}"
+                        wire:click="toggleAccordion('styles')" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseSytles"
+                        aria-expanded="{{ $openAccordions['styles'] ? 'true' : 'false' }}"
+                        aria-controls="flush-collapseSytles">
                         Styles
                     </button>
                 </h2>
-                <div id="flush-collapseTwo" class="accordion-collapse collapse">
+                <div id="flush-collapseSytles"
+                    class="accordion-collapse collapse {{ $openAccordions['styles'] ? 'show' : '' }}">
                     <div class="accordion-body" style="max-height: 200px; overflow-y: auto">
                         <ul class="list-unstyled lh-lg">
-                            @foreach ($styles as $style)
+                            @forelse ($styles as $style)
                                 <li wire:key="{{ $style->id }}">
                                     <input class="form-check-input" type="checkbox" value="{{ $style->id }}"
                                         id="style-{{ $style->id }}" wire:model.live="selectedStyles">
@@ -45,7 +57,11 @@
                                         {{ $style->name }}
                                     </label>
                                 </li>
-                            @endforeach
+                            @empty
+                                <li>
+                                    No styles found.
+                                </li>
+                            @endforelse
                         </ul>
                     </div>
                 </div>
@@ -53,7 +69,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="w-75">
         <div class="d-flex flex-column">
             <input type="text" class="form-control mb-3" placeholder="Search..." wire:model.live="search">
 
