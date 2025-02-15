@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Enums\BeerSortingOption;
 use App\Models\Beer;
 use App\Models\Brewery;
 use App\Models\Style;
@@ -22,6 +23,15 @@ class Beers extends Component
         'breweries' => false,
         'styles' => false,
     ];
+
+    public string $sortOption = BeerSortingOption::CREATED_AT_ASC->value;
+
+    public array $sortOptions = [];
+
+    public function mount(): void
+    {
+        $this->sortOptions = BeerSortingOption::cases();
+    }
 
     public function render()
     {
@@ -48,6 +58,8 @@ class Beers extends Component
             });
         });
 
+        $query = $this->applySorting($query);
+
         $beers = $query->take($this->amount)->get();
 
         return view('livewire.beers', [
@@ -57,7 +69,7 @@ class Beers extends Component
         ]);
     }
 
-    public function getAvailableStylesProperty()
+    public function getAvailableStylesProperty(): \Illuminate\Database\Eloquent\Collection
     {
         $query = Beer::query();
 
@@ -83,7 +95,7 @@ class Beers extends Component
         return Style::whereIn('id', $styleIds)->orderBy('name')->get();
     }
 
-    public function getAvailableBreweriesProperty()
+    public function getAvailableBreweriesProperty(): \Illuminate\Database\Eloquent\Collection
     {
         $query = Beer::query();
 
@@ -114,8 +126,31 @@ class Beers extends Component
         $this->amount += 10;
     }
 
-    public function toggleAccordion($accordion)
+    public function toggleAccordion($accordion): void
     {
         $this->openAccordions[$accordion] = ! $this->openAccordions[$accordion];
+    }
+
+
+    public function applySorting(Builder $query): Builder
+    {
+        $sortOption = BeerSortingOption::from($this->sortOption);
+        $sortDirection = $sortOption->direction();
+
+        if ($sortOption->isBrewery()) {
+            return $query
+                ->leftJoin('breweries', 'beers.brewery_id', '=', 'breweries.id')
+                ->orderBy('breweries.name', $sortDirection)
+                ->select('beers.*');
+        }
+
+        if ($sortOption->isStyle()) {
+            return $query
+                ->leftJoin('styles', 'beers.style_id', '=', 'styles.id')
+                ->orderBy('styles.name', $sortDirection)
+                ->select('beers.*');
+        }
+
+        return $query->orderBy($sortOption->column(), $sortDirection);
     }
 }

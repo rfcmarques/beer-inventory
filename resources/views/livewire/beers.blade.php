@@ -71,7 +71,21 @@
 
     <div class="w-75">
         <div class="d-flex flex-column">
-            <input type="text" class="form-control mb-3" placeholder="Search..." wire:model.live="search">
+            <div class="d-flex">
+                <div class="col-8">
+                    <input type="text" class="form-control mb-3" placeholder="Search..." wire:model.live="search">
+                </div>
+
+                <div class="col-3 ms-auto">
+                    <div class="input-group">
+                        <select class="form-select" wire:model.live="sortOption">
+                            @foreach ($sortOptions as $option)
+                                <option value="{{ $option->value }}">{{ $option->label() }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
 
             <div class="overflow-x-hidden px-2" style="max-height: 80vh; overflow-y: auto">
                 @forelse ($beers as $beer)
