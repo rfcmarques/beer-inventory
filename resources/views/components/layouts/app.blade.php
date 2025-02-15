@@ -11,7 +11,7 @@
     @livewireStyles
 </head>
 
-<body class="bg-body-tertiary">
+<body>
     <x-navbar></x-navbar>
 
     <main class="container mt-5">
