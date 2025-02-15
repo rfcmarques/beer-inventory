@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100">
+<html lang="pt" class="h-100">
 
 <head>
     <meta charset="UTF-8">
@@ -8,12 +8,17 @@
     <title>Document</title>
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script src="https://unpkg.com/cal-heatmap/dist/cal-heatmap.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/cal-heatmap/dist/cal-heatmap.css">
 </head>
 
 <body class="bg-body-tertiary">
     <x-navbar></x-navbar>
 
-    <main class="container mt-5">
+    <main class="container my-5">
         {{ $slot }}
     </main>
 </body>

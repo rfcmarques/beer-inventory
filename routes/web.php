@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BeerController;
 use App\Http\Controllers\BreweryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemConsumedController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\SessionController;
@@ -9,7 +10,7 @@ use App\Http\Controllers\StyleController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::view('/', 'home.index');
+Route::get('/', DashboardController::class);
 
 Route::controller(StyleController::class)->group(function () {
     Route::get('/styles', 'index');
