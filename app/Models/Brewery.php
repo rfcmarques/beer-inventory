@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use App\Observers\BreweryObserver;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[ObservedBy([BreweryObserver::class])]
@@ -119,7 +120,7 @@ class Brewery extends Model
      * @param Builder $query
      * @return Collection
      */
-    public function scopeByCountry(Builder $query): Collection
+    public function scopeByCountry(Builder $query): SupportCollection
     {
         return $query->get()
             ->countBy('country')
