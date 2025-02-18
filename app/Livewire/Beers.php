@@ -48,12 +48,12 @@ class Beers extends Component
         $query->when(strlen($this->search) >= 1, function (Builder $query) {
             $search = strtolower($this->search);
             $query->where(function (Builder $query) use ($search) {
-                $query->whereRaw('LOWER(name) LIKE ?', ['%' . $search . '%'])
+                $query->whereRaw('LOWER(beers.name) LIKE ?', ['%' . $search . '%'])
                     ->orWhereHas('brewery', function (Builder $query) use ($search) {
-                        $query->whereRaw('LOWER(name) LIKE ?', ['%' . $search . '%']);
+                        $query->whereRaw('LOWER(breweries.name) LIKE ?', ['%' . $search . '%']);
                     })
                     ->orWhereHas('style', function (Builder $query) use ($search) {
-                        $query->whereRaw('LOWER(name) LIKE ?', ['%' . $search . '%']);
+                        $query->whereRaw('LOWER(styles.name) LIKE ?', ['%' . $search . '%']);
                     });
             });
         });
