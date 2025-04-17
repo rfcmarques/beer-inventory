@@ -10,11 +10,7 @@ class StyleController extends Controller
 {
     public function index()
     {
-        $styles = Style::orderBy('name')->simplePaginate(30);
-
-        return view('styles.index', [
-            'styles' => $styles
-        ]);
+        return view('styles.index');
     }
 
     public function create()
