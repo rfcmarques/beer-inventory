@@ -6,7 +6,7 @@
             <div class="d-flex flex-row align-items-center h-100">
                 <div class="col me-5">
                     <h4>{{ $brewery->name }}</h4>
-                    <p>{{ $brewery->country }}</p>
+                    <p>{{ $brewery->country->name }}</p>
                 </div>
                 <div class="col">
                     @php

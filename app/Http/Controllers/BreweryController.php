@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBreweryRequest;
 use App\Http\Requests\UpdateBreweryRequest;
 use App\Models\Brewery;
+use App\Models\Country;
 use App\Services\CountriesAPIService;
 use Illuminate\Support\Facades\Cache;
 
@@ -17,7 +18,7 @@ class BreweryController extends Controller
 
     public function create()
     {
-        $countries = CountriesAPIService::getCountriesByName();
+        $countries = Cache::rememberForever('countries', fn() => Country::select('id', 'name')->orderBy('name')->get());
 
         return view('breweries.create', [
             'countries' => $countries
@@ -39,7 +40,8 @@ class BreweryController extends Controller
 
     public function edit(Brewery $brewery)
     {
-        $countries = CountriesAPIService::getCountriesByName();
+        $countries = Cache::get('countries')
+            ?? Cache::rememberForever('countries', fn() => Country::select('id', 'name')->orderBy('name')->get());
 
         return view('breweries.edit', [
             'brewery' => $brewery,
