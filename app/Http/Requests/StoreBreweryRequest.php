@@ -26,9 +26,10 @@ class StoreBreweryRequest extends FormRequest
                 'required',
                 'string'
             ],
-            'country' => [
+            'country_id' => [
                 'required',
-                'string'
+                'numeric',
+                'exists:countries,id'
             ],
             'logo' => [
                 'image'

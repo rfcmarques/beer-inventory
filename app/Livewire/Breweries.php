@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Brewery;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -16,25 +17,25 @@ class Breweries extends Component
 
     public function render(): View
     {
-        if (Str::length($this->search) > 0) {
-            $this->searchBreweries();
-        } else {
-            $this->getBreweries();
-        }
+        $query = $this->buildBreweriesQuery();
+
+        $this->breweries = $query->take($this->amount)->get();
 
         return view('livewire.breweries');
     }
 
-    public function getBreweries(): void
+    protected function buildBreweriesQuery(): Builder
     {
-        $this->breweries = Brewery::orderBy('name')->take($this->amount)->get();
-    }
+        $query = Brewery::with('country')->orderBy('name');
 
-    public function searchBreweries(): void
-    {
-        $this->breweries = Brewery::where('name', 'like', '%' . $this->search . '%')
-            ->orWhere('country', 'like', '%' . $this->search . '%')
-            ->get();
+        if (Str::length($this->search) > 0) {
+            $query->where('name', 'like', '%' . $this->search . '%')
+                ->orWhereHas('country', function ($query) {
+                    $query->where('name', 'like', '%' . $this->search . '%');
+                });
+        }
+
+        return $query;
     }
 
     public function load(): void
