@@ -16,9 +16,9 @@
 </head>
 
 <body class="bg-body-tertiary">
-    <x-navbar></x-navbar>
+    <x-navbar />
 
-    <main class="container my-5">
+    <main class="container mt-5 pb-3">
         {{ $slot }}
     </main>
 </body>
