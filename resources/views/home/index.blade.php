@@ -2,41 +2,86 @@
     <h1 class="display-5"><strong>Welcome to my stash!</strong></h1>
 
     <div class="row mt-4 mb-4">
-        <!-- Total Items Card -->
-        <div class="col-md-3 col-sm-6 mb-3">
-            <x-statistics.card-stats-carousel title="Total Items" :carousels="['available' => $itemsAvailable, 'consumed' => $itemsConsumed]" border="border-primary" />
+
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 mb-3">
+                    <x-statistics.card-stats-carousel title="Total Items" :carousels="['available' => $itemsAvailable, 'consumed' => $itemsConsumed]" border="border-warning" />
+                </div>
+
+                <!-- Unique Beers Card -->
+                <div class="col-md-6 col-sm-6 mb-3">
+                    <x-statistics.card-stats-carousel title="Unique Beers" :carousels="['available' => $beersAvailable, 'consumed' => $beersConsumed]" border="border-warning" />
+                </div>
+
+                <!-- Breweries Card -->
+                <div class="col-md-6 col-sm-6 mb-3">
+                    <x-statistics.card-stats-carousel title="Breweries" :carousels="['available' => $breweriesAvailable, 'consumed' => $breweriesConsumed]" border="border-warning" />
+                </div>
+
+                <!-- Styles Card -->
+                <div class="col-md-6 col-sm-6 mb-3">
+                    <x-statistics.card-stats-carousel title="Styles" :carousels="['available' => $stylesAvailable, 'consumed' => $stylesConsumed]" border="border-warning" />
+                </div>
+
+                <div class="col-md-6 col-sm-6 mb-3">
+                    <x-statistics.card-stats-carousel title="Countries" :carousels="['available' => $countriesAvailable, 'consumed' => $countriesConsumed]" border="border-warning" />
+                </div>
+
+                <div class="col-md-6 col-sm-6 mb-3">
+                    <x-statistics.card-stats-carousel title="Liters" :carousels="['available' => $litersAvailable, 'consumed' => $litersConsumed]" border="border-warning" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <x-statistics.card-stats-carousel title="Last Beers Consumed" :carousels="$lastBeersConsumed"
+                        border="border-warning" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <x-statistics.card-stats-carousel title="Last Beers Consumed" :carousels="$lastBeersConsumed"
+                        border="border-warning" />
+                </div>
+            </div>
         </div>
 
-        <!-- Unique Beers Card -->
-        <div class="col-md-3 col-sm-6 mb-3">
-            <x-statistics.card-stats-carousel title="Unique Beers" :carousels="['available' => $beersAvailable, 'consumed' => $beersConsumed]" border="border-success" />
-        </div>
-    
-        <!-- Breweries Card -->
-        <div class="col-md-3 col-sm-6 mb-3">
-            <x-statistics.card-stats-carousel title="Breweries" :carousels="['available' => $breweriesAvailable, 'consumed' => $breweriesConsumed]" border="border-warning" />
-        </div>
-    
-        <!-- Styles Card -->
-        <div class="col-md-3 col-sm-6 mb-3">
-            <x-statistics.card-stats-carousel title="Styles" :carousels="['available' => $stylesAvailable, 'consumed' => $stylesConsumed]" border="border-danger" />
+        <div class="col-md-3 pt-3">
+            <x-card class="bg-white shadow rounded-2 mb-4">
+                <x-slot name="header">
+                    <h3 class="mb-0">Expiring soon</h3>
+                </x-slot> {{-- note: just </x-slot> here --}}
+
+                <ul class="timeline list-unstyled">
+                    @foreach ($expirignBeers as $item)
+                        <li class="timeline-item d-flex mb-4">
+                            <div class="icon-wrapper bg-warning rounded-circle"></div>
+                            <div class="content ms-3">
+                                @php
+                                    $expirationDate = $item->expiration_date;
+                                    $daysToExpiration = (int) now()->diffInDays($expirationDate, false);
+                                @endphp
+                                <strong>{{ $item->beer->name }}</strong> <span
+                                    class="text-muted">{{ $daysToExpiration }} days</span>
+                                <p class="mb-0">{{ $item->beer->brewery->name }}</p>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </x-card>
         </div>
     </div>
 
     <div class="row mb-4">
         {{-- Last beers consumed --}}
-        <div class="col-md-3 mb-3">
-            <x-statistics.card-stats-carousel title="Last Beers Consumed" :carousels="$lastBeersConsumed" border="border-secondary" />
-        </div>
+
 
         <!-- Mean Time to Consume an Item Card -->
-        <div class="col-md-3 mb-3">
+        {{-- <div class="col-md-3 mb-3">
             <x-statistics.card-stats-carousel title="Mean Time To Consume" :carousels="[$meanTimeToConsume . ' days']" border="border-info" />
-        </div>
+        </div> --}}
     </div>
 
     <!-- Expiration Timeline (Scrollable) -->
-    <div class="mb-4 p-3 bg-white shadow rounded-2">
+    {{-- <div class="mb-4 p-3 bg-white shadow rounded-2">
         <h4>Beers Expiring Soon</h4>
         <div class="d-flex overflow-x-auto p-3">
             <ul class="timeline px-5">
@@ -50,7 +95,7 @@
                 @endforeach
             </ul>
         </div>
-    </div>
+    </div> --}}
 
     {{-- Top 5 Breweries and Styles --}}
     <div class="row d-flex mb-4">
@@ -119,17 +164,17 @@
     </div>
 
     {{-- Trend Over Time --}}
-    <div class="mb-4">
+    {{-- <div class="mb-4">
         <h4>Collection Trend Over Time</h4>
         <x-card class="bg-white shadow rounded-2 border-0">
             <div class="chart-container mt-3">
                 <canvas id="collectionTrendChart"></canvas>
             </div>
         </x-card>
-    </div>
+    </div> --}}
 
     {{-- Consumption Patters --}}
-    <div class="row mb-4">
+    {{-- <div class="row mb-4">
         <!-- Time of Day Heatmap -->
         <div class="col-md-6">
             <h4>Time of Day Consumption</h4>
@@ -147,11 +192,11 @@
                 <div id="daily-consumption-calendar" class="chart-container mt-3"></div> <!-- Calendar Container -->
             </x-card>
         </div>
-    </div>
+    </div> --}}
 
 
     {{-- Ready for consumption --}}
-    <div class="mb-4">
+    {{-- <div class="mb-4">
         <h4>Styles Ready for Consumption</h4>
         <x-card class="bg-white shadow rounded-2 border-0">
             <div class="table-responsive mt-3">
@@ -193,18 +238,18 @@
                 </table>
             </div>
         </x-card>
-    </div>
+    </div> --}}
 
-    <div class="mb-4">
+    {{-- <div class="mb-4">
         <h4>Styles Ready for Consumption</h4>
         <x-card class="bg-white shadow rounded-2 border-0">
             <div class="chart-container mt-3">
                 <canvas id="stylesReadyChart"></canvas>
             </div>
         </x-card>
-    </div>
+    </div> --}}
 
-    <div class="row mb-4">
+    {{-- <div class="row mb-4">
         <!-- Breweries Contribution Bar Chart -->
         <div class="col-md-6">
             <h4>Breweries Contribution</h4>
@@ -224,24 +269,24 @@
                 </div>
             </x-card>
         </div>
-    </div>
+    </div> --}}
 
-    <div class="mb-4">
+    {{-- <div class="mb-4">
         <h4>Beer Origins Map</h4>
         <x-card class="bg-white shadow rounded-2 border-0">
             <div id="beer-origins-map" class="chart-container mt-3" style="height: 500px;"></div>
             <!-- Map container -->
         </x-card>
-    </div>
+    </div> --}}
 
-    <div class="mb-4">
+    {{-- <div class="mb-4">
         <h4>Seasonal Consumption Patterns</h4>
         <x-card class="bg-white shadow rounded-2 border-0">
             <div class="chart-container mt-3">
                 <canvas id="seasonalConsumptionChart"></canvas>
             </div>
         </x-card>
-    </div>
+    </div> --}}
 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

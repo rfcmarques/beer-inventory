@@ -8,6 +8,7 @@ use App\Models\Brewery;
 use App\Models\Item;
 use App\Models\Style;
 use App\Enums\ContainerType;
+use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -58,6 +59,36 @@ class DashboardController extends Controller
             fn() => Style::withConsumedItems()->count()
         );
 
+        $countriesAvailable = Cache::rememberForever(
+            'countries-available',
+            fn() => Country::withAvailableItems()->count()
+        );
+
+        $countriesConsumed = Cache::rememberForever(
+            'countries-consumed',
+            fn() => Country::withConsumedItems()->count()
+        );
+
+        $litersAvailable = (int) round(
+            num: Cache::rememberForever(
+                'liters-available',
+                fn() => Item::available()
+                    ->join('containers', 'containers.id', '=', 'items.container_id')
+                    ->sum('containers.capacity') / 1000
+            ),
+            mode: PHP_ROUND_HALF_UP
+        );
+
+        $litersConsumed = (int) round(
+            num: Cache::rememberForever(
+                'liters-consumed',
+                fn() => Item::consumed()
+                    ->join('containers', 'containers.id', '=', 'items.container_id')
+                    ->sum('containers.capacity') / 1000
+            ),
+            mode: PHP_ROUND_HALF_UP
+        );
+
         $meanTimeToConsume = Cache::rememberForever(
             'mean-time-to-consume',
             fn() => $this->getMeanTimeToConsume()
@@ -68,9 +99,25 @@ class DashboardController extends Controller
             fn() => Item::consumed()->with('beer')->orderBy('consumed_at', 'desc')->limit(3)->get('beer_id')->pluck('beer.name')->toArray()
         );
 
+        // need to rework on this
+
+        $itemsConsumedPerWeek = Cache::rememberForever(
+            'items-consumed-per-week',
+            fn() => Item::consumed()
+                ->where('consumed_at', '>=', now()->subDays(7))
+                ->count()
+        );
+
+        $itemsConsumedPerMonth = Cache::rememberForever(
+            'items-consumed-per-month',
+            fn() => Item::consumed()
+                ->where('consumed_at', '>=', now()->subDays(30))
+                ->count()
+        );
+
         $expiringBeers = Cache::rememberForever(
             'expiring-beers',
-            fn() => Item::expiringSoon()->limit(10)->get()
+            fn() => Item::expiringSoon()->limit(5)->get()
         );
 
         $availableBreweriesTop5 = Cache::rememberForever(
@@ -133,6 +180,10 @@ class DashboardController extends Controller
             ->with('breweriesConsumed', $breweriesConsumed)
             ->with('stylesAvailable', $stylesAvailable)
             ->with('stylesConsumed', $stylesConsumed)
+            ->with('countriesAvailable', $countriesAvailable)
+            ->with('countriesConsumed', $countriesConsumed)
+            ->with('litersAvailable', $litersAvailable)
+            ->with('litersConsumed', $litersConsumed)
             ->with('meanTimeToConsume', $meanTimeToConsume)
             ->with('lastBeersConsumed', $lastBeersConsumed)
             ->with('expirignBeers', $expiringBeers)
