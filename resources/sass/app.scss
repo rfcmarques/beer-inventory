@@ -96,57 +96,114 @@
 //     }
 // }
 
+// .timeline {
+//     width: 100%;
+//     height: 20px;
+//     list-style: none;
+//     text-align: justify;
+//     margin: 80px auto;
+//     background: linear-gradient(
+//         to bottom,
+//         rgba(255, 255, 255, 0) 0%,
+//         rgba(255, 255, 255, 0) 45%,
+//         rgba(191, 128, 11, 1) 51%,
+//         rgba(255, 255, 255, 0) 57%,
+//         rgba(255, 255, 255, 0) 100%
+//     );
+
+//     &::after {
+//         display: inline-block;
+//         content: "";
+//         width: 100%;
+//     }
+// }
+
+// .timeline li {
+//     display: inline-block;
+//     width: 20px;
+//     height: 20px;
+//     background: #f2bb13;
+//     text-align: center;
+//     line-height: 1.2;
+//     position: relative;
+//     border-radius: 50%;
+//     margin: auto; /* Adjust spacing between the points */
+
+//     /* Position the beer name (data-text) above the timeline point */
+//     &::before {
+//         content: attr(data-text);
+//         font-size: 10pt;
+//         position: absolute;
+//         top: -70px;
+//         left: 50%;
+//         transform: translateX(-50%);
+//     }
+
+//     /* Position the expiration time (data-time) below the timeline point */
+//     &::after {
+//         content: attr(data-time);
+//         font-size: 12pt;
+//         position: absolute;
+//         bottom: -30px; /* Distance below the point */
+//         left: 50%;
+//         transform: translateX(-50%);
+//         white-space: nowrap;
+//     }
+// }
+
 .timeline {
-    width: 100%;
-    height: 20px;
-    list-style: none;
-    text-align: justify;
-    margin: 80px auto;
-    background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0) 45%,
-        rgba(191, 128, 11, 1) 51%,
-        rgba(255, 255, 255, 0) 57%,
-        rgba(255, 255, 255, 0) 100%
-    );
-
-    &::after {
-        display: inline-block;
-        content: "";
-        width: 100%;
-    }
-}
-
-.timeline li {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background: #f2bb13;
-    text-align: center;
-    line-height: 1.2;
     position: relative;
-    border-radius: 50%;
-    margin: auto; /* Adjust spacing between the points */
-
-    /* Position the beer name (data-text) above the timeline point */
-    &::before {
-        content: attr(data-text);
-        font-size: 10pt;
-        position: absolute;
-        top: -70px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    /* Position the expiration time (data-time) below the timeline point */
-    &::after {
-        content: attr(data-time);
-        font-size: 12pt;
-        position: absolute;
-        bottom: -30px; /* Distance below the point */
-        left: 50%;
-        transform: translateX(-50%);
-        white-space: nowrap;
-    }
-}
+  }
+  
+  .timeline::before {
+    content: ""; /* The vertical line itself */
+    position: absolute;
+    left: 1.2rem; /* Aligns with the center of icon-wrapper */
+    top: 0;
+    bottom: 0; /* Stretches the line from top to bottom */
+    width: 2px; /* Line thickness */
+    background-color: rgba(255, 255, 255, 0.1); /* Light color for the line */
+    z-index: 0; /* Ensures it stays below other elements */
+  }
+  
+  .timeline-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Space between items */
+  }
+  
+  .timeline-item:last-child {
+    margin-bottom: 0; /* No margin for the last item */
+  }
+  
+  .timeline-item::before {
+    content: ""; /* The dot on the line */
+    position: absolute;
+    left: 20px; /* Aligns with the vertical line */
+    top: 50%; /* Center vertically in the item */
+    transform: translateY(-50%); /* Adjust for perfect vertical centering */
+    width: 12px; /* Size of the dot */
+    height: 12px; /* Size of the dot */
+    background-color: #0d6efd; /* Dot color */
+    border: 2px solid #0d6efd; /* Matches the line color */
+    border-radius: 50%; /* Makes the dot circular */
+    z-index: 1; /* Ensures it appears above the vertical line */
+  }
+  
+  .icon-wrapper {
+    width: 40px; /* Circle size */
+    height: 40px;
+    border-radius: 50%; /* Makes it circular */
+    background-color: #0d6efd; /* Circle color */
+    flex-shrink: 0; /* Prevents shrinking */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers content inside the circle */
+    z-index: 2; /* Ensures it appears above the line */
+  }
+  
+  .timeline-item .content {
+    margin-left: 20px; /* Space between icon-wrapper and text */
+  }
+  
