@@ -19,4 +19,18 @@ class Country extends Model
     {
         return $this->hasMany(Brewery::class);
     }
+
+    public function scopewithAvailableItems($query)
+    {
+        return $query->whereHas('breweries.beers.items', function ($query) {
+            $query->available();
+        });
+    }
+
+    public function scopewithConsumedItems($query)
+    {
+        return $query->whereHas('breweries.beers.items', function ($query) {
+            $query->consumed();
+        });
+    }
 }
