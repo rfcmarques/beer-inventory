@@ -26,9 +26,9 @@ class UpdateBreweryRequest extends FormRequest
                 'required',
                 'string'
             ],
-            'country' => [
+            'country_id' => [
                 'required',
-                'string'
+                'exists:countries,id'
             ],
             'logo' => [
                 'image'

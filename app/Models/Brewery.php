@@ -9,6 +9,7 @@ use App\Observers\BreweryObserver;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as SupportCollection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[ObservedBy([BreweryObserver::class])]
@@ -16,11 +17,16 @@ class Brewery extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'country', 'logo'];
+    protected $fillable = ['name', 'country_id', 'logo'];
 
     public function beers(): HasMany
     {
         return $this->hasMany(Beer::class);
+    }
+
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
     }
 
     /**
@@ -32,7 +38,7 @@ class Brewery extends Model
      */
     public function scopeWithAvailableItems(Builder $query): Builder
     {
-        return $query->whereHas('beers.items', fn ($query) => $query->available());
+        return $query->whereHas('beers.items', fn($query) => $query->available());
     }
 
     /**
@@ -44,7 +50,7 @@ class Brewery extends Model
      */
     public function scopeWithConsumedItems(Builder $query): Builder
     {
-        return $query->whereHas('beers.items', fn ($query) => $query->consumed());
+        return $query->whereHas('beers.items', fn($query) => $query->consumed());
     }
 
     /**
@@ -58,7 +64,7 @@ class Brewery extends Model
     public function scopeWithAvailableBeersCount(Builder $query): Builder
     {
         return $query->withCount([
-            'beers as available_beers' => fn ($query) => $query->available()
+            'beers as available_beers' => fn($query) => $query->available()
         ]);
     }
 
@@ -73,7 +79,7 @@ class Brewery extends Model
     public function scopeWithConsumedBeersCount(Builder $query): Builder
     {
         return $query->withCount([
-            'beers as consumed_beers' => fn ($query) => $query->consumed()
+            'beers as consumed_beers' => fn($query) => $query->consumed()
         ]);
     }
 
