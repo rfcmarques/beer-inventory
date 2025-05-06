@@ -9,26 +9,28 @@
                     <h4>{{ $beer->brewery->name ?? 'N/A' }}</h4>
                     <h5 class="fw-light">{{ $beer->style->name ?? 'N/A' }}</h5>
                 </div>
-                <div class="dropdown-center">
-                    <a class="text-decoration-none text-secondary" data-bs-toggle="dropdown" aria-expanded="false"
-                        href="">
-                        <i class="fa-solid fa-ellipsis"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="/beers/{{ $beer->id }}/edit">
-                                Edit
-                            </a>
-                        </li>
-                        <li>
-                            <form action="/beers/{{ $beer->id }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button class="dropdown-item" type="submit">Delete</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
+                @can(['update', 'delete'], $beer)
+                    <div class="dropdown-center">
+                        <a class="text-decoration-none text-secondary" data-bs-toggle="dropdown" aria-expanded="false"
+                            href="">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="/beers/{{ $beer->id }}/edit">
+                                    Edit
+                                </a>
+                            </li>
+                            <li>
+                                <form action="/beers/{{ $beer->id }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="dropdown-item" type="submit">Delete</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @endcan
             </div>
         </div>
     </div>

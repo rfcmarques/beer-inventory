@@ -9,26 +9,28 @@
                 </div>
                 <div class="d-flex align-items-center ps-3 h-100  w-100">
                     <span class="lead fw-medium me-auto">{{ $style->name }}</span>
-                    <div class="dropdown-center">
-                        <a class="me-4 text-decoration-none text-secondary" data-bs-toggle="dropdown"
-                            aria-expanded="false" href="">
-                            <i class="fa-solid fa-ellipsis-vertical"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="/styles/{{ $style->id }}/edit">
-                                    Edit
-                                </a>
-                            </li>
-                            <li>
-                                <form action="/styles/{{ $style->id }}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="dropdown-item" type="submit">Delete</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
+                    @can(['update', 'delete'], $style)
+                        <div class="dropdown-center">
+                            <a class="me-4 text-decoration-none text-secondary" data-bs-toggle="dropdown"
+                                aria-expanded="false" href="">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="/styles/{{ $style->id }}/edit">
+                                        Edit
+                                    </a>
+                                </li>
+                                <li>
+                                    <form action="/styles/{{ $style->id }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="dropdown-item" type="submit">Delete</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    @endcan
                 </div>
             </div>
         </div>
