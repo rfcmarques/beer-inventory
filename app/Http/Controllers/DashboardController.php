@@ -99,19 +99,27 @@ class DashboardController extends Controller
             fn() => Item::consumed()->with('beer')->orderBy('consumed_at', 'desc')->limit(3)->get('beer_id')->pluck('beer.name')->toArray()
         );
 
-        // need to rework on this
-
+        // number of items consumed per week
         $itemsConsumedPerWeek = Cache::rememberForever(
             'items-consumed-per-week',
             fn() => Item::consumed()
-                ->where('consumed_at', '>=', now()->subDays(7))
+                ->where('consumed_at', '>=', now()->subWeek())
                 ->count()
         );
 
+        // number of items consumed per month
         $itemsConsumedPerMonth = Cache::rememberForever(
             'items-consumed-per-month',
             fn() => Item::consumed()
-                ->where('consumed_at', '>=', now()->subDays(30))
+                ->where('consumed_at', '>=', now()->subMonth())
+                ->count()
+        );
+
+        // number of items consumed per year
+        $itemsConsumedPerYear = Cache::rememberForever(
+            'items-consumed-per-year',
+            fn() => Item::consumed()
+                ->where('consumed_at', '>=', now()->subYear())
                 ->count()
         );
 
@@ -186,6 +194,9 @@ class DashboardController extends Controller
             ->with('litersConsumed', $litersConsumed)
             ->with('meanTimeToConsume', $meanTimeToConsume)
             ->with('lastBeersConsumed', $lastBeersConsumed)
+            ->with('itemsConsumedPerWeek', $itemsConsumedPerWeek)
+            ->with('itemsConsumedPerMonth', $itemsConsumedPerMonth)
+            ->with('itemsConsumedPerYear', $itemsConsumedPerYear)
             ->with('expirignBeers', $expiringBeers)
             ->with('availableBreweriesTop5', $availableBreweriesTop5)
             ->with('consumedBreweriesTop5', $consumedBreweriesTop5)
