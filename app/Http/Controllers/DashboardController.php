@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Livewire\Breweries;
+use App\DTOs\BarGraphDto;
 use App\Models\Beer;
 use App\Models\Brewery;
 use App\Models\Item;
 use App\Models\Style;
-use App\Enums\ContainerType;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -133,9 +132,25 @@ class DashboardController extends Controller
             fn() => Brewery::withAvailableItemsCount()->sortByDesc('available_items')->select(['name', 'available_items'])->take(5)
         );
 
+        $availableBreweriesTop5Dataset = new BarGraphDto(
+            label: 'Available',
+            items: $availableBreweriesTop5,
+            valueField: 'available_items',
+            bgColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+        );
+
         $consumedBreweriesTop5 = Cache::rememberForever(
             'top-5-consumed-breweries',
             fn() => Brewery::withConsumedItemsCount()->sortByDesc('consumed_items')->select(['name', 'consumed_items'])->take(5)
+        );
+
+        $consumedBreweriesTop5Dataset = new BarGraphDto(
+            label: 'Consumed',
+            items: $consumedBreweriesTop5,
+            valueField: 'consumed_items',
+            bgColor: 'rgba(153, 102, 255, 0.2)',
+            borderColor: 'rgba(153, 102, 255, 1)',
         );
 
         $availableStylesTop5 = Cache::rememberForever(
@@ -143,9 +158,25 @@ class DashboardController extends Controller
             fn() => Style::withAvailableItemsCount()->sortByDesc('available_items')->select(['name', 'available_items'])->take(5)
         );
 
+        $availableStylesTop5Dataset = new BarGraphDto(
+            label: 'Available',
+            items: $availableStylesTop5,
+            valueField: 'available_items',
+            bgColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+        );
+
         $consumedStylesTop5 = Cache::rememberForever(
             'top-5-consumed-styles',
             fn() => Style::withConsumedItemsCount()->sortByDesc('consumed_items')->select(['name', 'consumed_items'])->take(5)
+        );
+
+        $consumedStylesTop5Dataset = new BarGraphDto(
+            label: 'Consumed',
+            items: $consumedStylesTop5,
+            valueField: 'consumed_items',
+            bgColor: 'rgba(153, 102, 255, 0.2)',
+            borderColor: 'rgba(153, 102, 255, 1)',
         );
 
         $addedByDate = Item::selectRaw('strftime("%Y-%m", created_at) as month, COUNT(*) as added_count')
@@ -198,14 +229,18 @@ class DashboardController extends Controller
             ->with('itemsConsumedPerMonth', $itemsConsumedPerMonth)
             ->with('itemsConsumedPerYear', $itemsConsumedPerYear)
             ->with('expirignBeers', $expiringBeers)
-            ->with('availableBreweriesTop5', $availableBreweriesTop5)
-            ->with('consumedBreweriesTop5', $consumedBreweriesTop5)
-            ->with('availableStylesTop5', $availableStylesTop5)
-            ->with('consumedStylesTop5', $consumedStylesTop5)
-            ->with('addedByDate', $addedByDate)
-            ->with('consumedByDate', $consumedByDate)
-            ->with('breweriesContribution', $breweriesContribution)
-            ->with('styleContribution', $styleContribution);
+            // ->with('addedByDate', $addedByDate)
+            // ->with('consumedByDate', $consumedByDate)
+            // ->with('breweriesContribution', $breweriesContribution)
+            // ->with('styleContribution', $styleContribution)
+            ->with('breweriesTop5Datasets', [
+                $availableBreweriesTop5Dataset,
+                $consumedBreweriesTop5Dataset,
+            ])
+            ->with('stylesTop5Datasets', [
+                $availableStylesTop5Dataset,
+                $consumedStylesTop5Dataset,
+            ]);
     }
 
     protected function getMeanTimeToConsume(): int

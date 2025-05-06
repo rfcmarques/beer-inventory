@@ -77,52 +77,13 @@
         <div class="col-lg-6 col-sm-12 mb-3">
             <h4>Top 5 Breweries</h4>
             <x-card class="bg-white shadow rounded-2 border-0">
-                @php
-                    $datasets = [
-                        [
-                            'label' => 'Available',
-                            'collection' => $availableBreweriesTop5,
-                            'valueField' => 'available_items',
-                            'bgColor' => 'rgba(75, 192, 192, 0.2)',
-                            'borderColor' => 'rgba(75, 192, 192, 1)',
-                        ],
-                        [
-                            'label' => 'Consumed',
-                            'collection' => $consumedBreweriesTop5,
-                            'valueField' => 'consumed_items',
-                            'bgColor' => 'rgba(153, 102, 255, 0.2)',
-                            'borderColor' => 'rgba(153, 102, 255, 1)',
-                        ],
-                    ];
-                @endphp
-
-                <x-statistics.bar-graph :datasets="$datasets" canvasId="breweries" />
+                <x-statistics.bar-graph :datasets="$breweriesTop5Datasets" canvasId="breweries" />
             </x-card>
         </div>
         <div class="col-lg-6 col-sm-12 mb-3">
             <h4>Top 5 Styles</h4>
             <x-card class="bg-white shadow rounded-2 border-0">
-
-                @php
-                    $datasets = [
-                        [
-                            'label' => 'Available',
-                            'collection' => $availableStylesTop5,
-                            'valueField' => 'available_items',
-                            'bgColor' => 'rgba(75, 192, 192, 0.2)',
-                            'borderColor' => 'rgba(75, 192, 192, 1)',
-                        ],
-                        [
-                            'label' => 'Consumed',
-                            'collection' => $consumedStylesTop5,
-                            'valueField' => 'consumed_items',
-                            'bgColor' => 'rgba(153, 102, 255, 0.2)',
-                            'borderColor' => 'rgba(153, 102, 255, 1)',
-                        ],
-                    ];
-                @endphp
-
-                <x-statistics.bar-graph :datasets="$datasets" canvasId="styles" />
+                <x-statistics.bar-graph :datasets="$stylesTop5Datasets" canvasId="styles" />
             </x-card>
         </div>
     </div>
