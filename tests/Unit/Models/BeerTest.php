@@ -43,6 +43,12 @@ it('should have correct casts', function () {
     expect($beer->getCasts())->toHaveKey('id', 'int');
 });
 
+it('should cast abv to decimal', function () {
+    $beer = Beer::factory()->create(['abv' => 5.5]);
+
+    expect($beer->getCasts())->toHaveKey('abv', 'decimal:2');
+});
+
 it('should belong to a brewery', function () {
     $beer = Beer::factory()->create();
 
@@ -53,6 +59,14 @@ it('should belong to a style', function () {
     $beer = Beer::factory()->create();
 
     expect($beer->style)->toBeInstanceOf(Style::class);
+});
+
+it('should have many items', function () {
+    $beer = Beer::factory()->create();
+    Item::factory()->count(3)->create(['beer_id' => $beer->id]);
+
+    expect($beer->items)->toHaveCount(3)
+        ->and($beer->items->first())->toBeInstanceOf(Item::class);
 });
 
 it('should scope to available beers', function () {
