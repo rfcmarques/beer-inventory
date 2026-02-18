@@ -53,6 +53,34 @@ it('should belong to many items', function () {
     expect($style->items())->toBeInstanceOf(HasManyThrough::class);
 });
 
+it('should scope to styles with available items', function () {
+    $style = Style::factory()->create();
+    $beer = Beer::factory()->create(['style_id' => $style->id]);
+    Item::factory()->create([
+        'beer_id' => $beer->id,
+        'consumed_at' => null,
+    ]);
+
+    $results = Style::available()->get();
+
+    expect($results)->toHaveCount(1)
+        ->and($results->first()->id)->toBe($style->id);
+});
+
+it('should scope to styles with consumed items', function () {
+    $style = Style::factory()->create();
+    $beer = Beer::factory()->create(['style_id' => $style->id]);
+    Item::factory()->create([
+        'beer_id' => $beer->id,
+        'consumed_at' => now(),
+    ]);
+
+    $results = Style::consumed()->get();
+
+    expect($results)->toHaveCount(1)
+        ->and($results->first()->id)->toBe($style->id);
+});
+
 it('should count available and consumed items', function () {
     $style = Style::factory()->create();
     $beer = Beer::factory()->create(['style_id' => $style->id]);

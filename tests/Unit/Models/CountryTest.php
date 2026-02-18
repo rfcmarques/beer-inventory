@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
+use App\Models\Beer;
+use App\Models\Brewery;
 use App\Models\Country;
+use App\Models\Item;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -42,21 +46,41 @@ it('should have correct casts', function () {
     expect($country->getCasts())->toHaveKey('id', 'int');
 });
 
-// test('it has expected columns', function () {
-//     $country = Country::factory()->create([
-//         'code' => 'US',
-//         'name' => 'United States',
-//         'official_name' => 'United States of America',
-//         'capital' => 'Washington, D.C.',
-//         'flag_url' => 'http://example.com/us.png',
-//     ]);
+it('should have many breweries', function () {
+    $country = Country::factory()->create();
+    Brewery::factory()->create(['country_id' => $country->id]);
 
-//     expect($country)
-//         ->code->toBe('US')
-//         ->name->toBe('United States')
-//         ->official_name->toBe('United States of America')
-//         ->capital->toBe('Washington, D.C.')
-//         ->flag_url->toBe('http://example.com/us.png')
-//         ->created_at->not->toBeNull()
-//         ->updated_at->not->toBeNull();
-// });
+    expect($country->breweries())->toBeInstanceOf(HasMany::class);
+});
+
+it('should scope to countries with available items', function () {
+    $country = Country::factory()->create();
+    $brewery = Brewery::factory()->create(['country_id' => $country->id]);
+    $beer = Beer::factory()->create(['brewery_id' => $brewery->id]);
+    Item::factory()->create([
+        'beer_id' => $beer->id,
+        'consumed_at' => null,
+    ]);
+
+    $results = Country::query()->available()->get();
+
+    expect($results)->toHaveCount(1)
+        ->and($results->first()->id)->toBe($country->id)
+        ->and($results->first()->breweries->first()->items->first()->consumed_at)->toBeNull();
+});
+
+it('should scope to countries with consumed items', function () {
+    $country = Country::factory()->create();
+    $brewery = Brewery::factory()->create(['country_id' => $country->id]);
+    $beer = Beer::factory()->create(['brewery_id' => $brewery->id]);
+    Item::factory()->create([
+        'beer_id' => $beer->id,
+        'consumed_at' => now(),
+    ]);
+
+    $results = Country::query()->consumed()->get();
+
+    expect($results)->toHaveCount(1)
+        ->and($results->first()->id)->toBe($country->id)
+        ->and($results->first()->breweries->first()->items->first()->consumed_at)->toBeTruthy();
+});
