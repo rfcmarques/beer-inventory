@@ -88,7 +88,7 @@ it('should scope to consumed breweries', function () {
         ->and($results->first()->id)->toBe($consumedBeer->id);
 });
 
-it('should scope breweries with available items count field', function () {
+it('should count the amount of items available with this brewery', function () {
     $brewery = Brewery::factory()->create();
     $beer = Beer::factory()->create(['brewery_id' => $brewery->id]);
     Item::factory()->create([
@@ -102,7 +102,7 @@ it('should scope breweries with available items count field', function () {
         ->and($results->firstWhere('id', $brewery->id)->quantity_available)->toBe(1);
 });
 
-it('should scope breweries with consumed items count field', function () {
+it('should count the amount of items consumed with this brewery', function () {
     $brewery = Brewery::factory()->create();
     $beer = Beer::factory()->create(['brewery_id' => $brewery->id]);
     Item::factory()->create([
@@ -116,7 +116,7 @@ it('should scope breweries with consumed items count field', function () {
         ->and($results->firstWhere('id', $brewery->id)->quantity_consumed)->toBe(1);
 });
 
-it('should scope breweries with quantity beers count field', function () {
+it('should count the amount of beers with this brewery', function () {
     $brewery = Brewery::factory()->create();
     Beer::factory()->count(2)->create(['brewery_id' => $brewery->id]);
 
