@@ -57,12 +57,9 @@ it('should have many beers', function () {
 it('should scope to available breweries', function () {
     $brewery = Brewery::factory()->create();
     $beer = Beer::factory()->create(['brewery_id' => $brewery->id]);
-    Item::factory()->create(['beer_id' => $beer->id]);
-
-    $consumedBeer = Beer::factory()->create();
     Item::factory()->create([
-        'beer_id' => $consumedBeer->id,
-        'consumed_at' => now(),
+        'beer_id' => $beer->id,
+        'consumed_at' => null,
     ]);
 
     $results = Brewery::available()->get();
@@ -74,18 +71,15 @@ it('should scope to available breweries', function () {
 it('should scope to consumed breweries', function () {
     $brewery = Brewery::factory()->create();
     $beer = Beer::factory()->create(['brewery_id' => $brewery->id]);
-    Item::factory()->create(['beer_id' => $beer->id]);
-
-    $consumedBeer = Beer::factory()->create();
     Item::factory()->create([
-        'beer_id' => $consumedBeer->id,
+        'beer_id' => $beer->id,
         'consumed_at' => now(),
     ]);
 
     $results = Brewery::consumed()->get();
 
     expect($results)->toHaveCount(1)
-        ->and($results->first()->id)->toBe($consumedBeer->id);
+        ->and($results->first()->id)->toBe($brewery->id);
 });
 
 it('should count the amount of items available with this brewery', function () {
