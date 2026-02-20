@@ -8,21 +8,11 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ItemBuilder extends Builder
 {
-    /**
-     * Filter items that are available.
-
-     * @return ItemBuilder
-     */
     public function available(): self
     {
         return $this->whereNull('consumed_at');
     }
 
-    /**
-     * Filter items that are consumed.
-     *
-     * @return ItemBuilder
-     */
     public function consumed(): self
     {
         return $this->whereNotNull('consumed_at');
@@ -90,11 +80,19 @@ class ItemBuilder extends Builder
         );
     }
 
-    public function consumedLastYear(): self
+    public function consumedThisYear(): self
     {
         return $this->consumedBetween(
             now()->startOfYear()->toDateString(),
             now()->toDateString()
+        );
+    }
+
+    public function consumedLastYear(): self
+    {
+        return $this->consumedBetween(
+            now()->startOfYear()->subYear()->toDateString(),
+            now()->startOfYear()->toDateString()
         );
     }
 
@@ -108,7 +106,7 @@ class ItemBuilder extends Builder
         return $this->whereBetween('expiration_date', [$startDate, $endDate]);
     }
 
-    public function expiringNextWeek(): self
+    public function expiringUntilNextWeek(): self
     {
         return $this->expiringBetween(
             now()->toDateString(),
@@ -116,7 +114,7 @@ class ItemBuilder extends Builder
         );
     }
 
-    public function expiringNextMonth(): self
+    public function expiringUntilNextMonth(): self
     {
         return $this->expiringBetween(
             now()->toDateString(),
@@ -124,7 +122,7 @@ class ItemBuilder extends Builder
         );
     }
 
-    public function expiringNextYear(): self
+    public function expiringUntilNextYear(): self
     {
         return $this->expiringBetween(
             now()->toDateString(),
