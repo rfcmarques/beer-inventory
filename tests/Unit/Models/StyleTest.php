@@ -61,6 +61,13 @@ it('should scope to styles with available items', function () {
         'consumed_at' => null,
     ]);
 
+    $otherStyle = Style::factory()->create();
+    $otherBeer = Beer::factory()->create(['style_id' => $otherStyle->id]);
+    Item::factory()->create([
+        'beer_id' => $otherBeer->id,
+        'consumed_at' => now(),
+    ]);
+
     $results = Style::available()->get();
 
     expect($results)->toHaveCount(1)
@@ -73,6 +80,13 @@ it('should scope to styles with consumed items', function () {
     Item::factory()->create([
         'beer_id' => $beer->id,
         'consumed_at' => now(),
+    ]);
+
+    $otherStyle = Style::factory()->create();
+    $otherBeer = Beer::factory()->create(['style_id' => $otherStyle->id]);
+    Item::factory()->create([
+        'beer_id' => $otherBeer->id,
+        'consumed_at' => null,
     ]);
 
     $results = Style::consumed()->get();
@@ -95,24 +109,34 @@ it('should count available and consumed items', function () {
         'consumed_at' => now(),
     ]);
 
-    $styleWithCounts = Style::query()
+    $otherStyle = Style::factory()->create();
+    $otherBeer = Beer::factory()->create(['style_id' => $otherStyle->id]);
+    Item::factory()->create([
+        'beer_id' => $otherBeer->id,
+        'consumed_at' => null,
+    ]);
+
+    $results = Style::query()
         ->withQuantityAvailable()
         ->withQuantityConsumed()
-        ->find($style->id);
+        ->get();
 
-    expect($styleWithCounts->quantity_available)->toBe(3)
-        ->and($styleWithCounts->quantity_consumed)->toBe(2);
+    expect($results->first()->quantity_available)->toBe(3)
+        ->and($results->first()->quantity_consumed)->toBe(2);
 });
 
 it('should count the amount of beers with this style', function () {
     $style = Style::factory()->create();
     Beer::factory()->count(5)->create(['style_id' => $style->id]);
 
-    $styleWithCount = Style::query()
-        ->withQuantityBeers()
-        ->find($style->id);
+    $otherStyle = Style::factory()->create();
+    Beer::factory()->count(2)->create(['style_id' => $otherStyle->id]);
 
-    expect($styleWithCount->quantity_beers)->toBe(5);
+    $results = Style::query()
+        ->withQuantityBeers()
+        ->get();
+
+    expect($results->first()->quantity_beers)->toBe(5);
 });
 
 it('should search styles by name', function () {

@@ -62,6 +62,13 @@ it('should scope to available breweries', function () {
         'consumed_at' => null,
     ]);
 
+    $consumedBrewery = Brewery::factory()->create();
+    $consumedBeer = Beer::factory()->create(['brewery_id' => $consumedBrewery->id]);
+    Item::factory()->create([
+        'beer_id' => $consumedBeer->id,
+        'consumed_at' => now(),
+    ]);
+
     $results = Brewery::available()->get();
 
     expect($results)->toHaveCount(1)
@@ -74,6 +81,13 @@ it('should scope to consumed breweries', function () {
     Item::factory()->create([
         'beer_id' => $beer->id,
         'consumed_at' => now(),
+    ]);
+
+    $availableBrewery = Brewery::factory()->create();
+    $availableBeer = Beer::factory()->create(['brewery_id' => $availableBrewery->id]);
+    Item::factory()->create([
+        'beer_id' => $availableBeer->id,
+        'consumed_at' => null,
     ]);
 
     $results = Brewery::consumed()->get();
@@ -90,9 +104,16 @@ it('should count the amount of items available with this brewery', function () {
         'consumed_at' => null
     ]);
 
+    $consumedBrewery = Brewery::factory()->create();
+    $consumedBeer = Beer::factory()->create(['brewery_id' => $consumedBrewery->id]);
+    Item::factory()->create([
+        'beer_id' => $consumedBeer->id,
+        'consumed_at' => now()
+    ]);
+
     $results = Brewery::withQuantityAvailable()->get();
 
-    expect($results)->toHaveCount(1)
+    expect($results)->toHaveCount(2)
         ->and($results->firstWhere('id', $brewery->id)->quantity_available)->toBe(1);
 });
 
@@ -104,9 +125,16 @@ it('should count the amount of items consumed with this brewery', function () {
         'consumed_at' => now()
     ]);
 
+    $availableBrewery = Brewery::factory()->create();
+    $availableBeer = Beer::factory()->create(['brewery_id' => $availableBrewery->id]);
+    Item::factory()->create([
+        'beer_id' => $availableBeer->id,
+        'consumed_at' => null,
+    ]);
+
     $results = Brewery::withQuantityConsumed()->get();
 
-    expect($results)->toHaveCount(1)
+    expect($results)->toHaveCount(2)
         ->and($results->firstWhere('id', $brewery->id)->quantity_consumed)->toBe(1);
 });
 
@@ -114,10 +142,14 @@ it('should count the amount of beers with this brewery', function () {
     $brewery = Brewery::factory()->create();
     Beer::factory()->count(2)->create(['brewery_id' => $brewery->id]);
 
+    $otherBrewery = Brewery::factory()->create();
+    Beer::factory()->count(3)->create(['brewery_id' => $otherBrewery->id]);
+
     $results = Brewery::withQuantityBeers()->get();
 
-    expect($results)->toHaveCount(1)
-        ->and($results->firstWhere('id', $brewery->id)->quantity_beers)->toBe(2);
+    expect($results)->toHaveCount(2)
+        ->and($results->firstWhere('id', $brewery->id)->quantity_beers)->toBe(2)
+        ->and($results->firstWhere('id', $otherBrewery->id)->quantity_beers)->toBe(3);
 });
 
 it('should search breweries based on their name and country name', function () {

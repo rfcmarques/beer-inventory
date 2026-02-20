@@ -62,10 +62,18 @@ it('should scope to countries with available items', function () {
         'consumed_at' => null,
     ]);
 
+    $otherCountry = Country::factory()->create();
+    $otherBrewery = Brewery::factory()->create(['country_id' => $otherCountry->id]);
+    $otherBeer = Beer::factory()->create(['brewery_id' => $otherBrewery->id]);
+    Item::factory()->create([
+        'beer_id' => $otherBeer->id,
+        'consumed_at' => now(),
+    ]);
+
     $results = Country::query()->available()->get();
 
     expect($results)->toHaveCount(1)
-        ->and($results->first()->id)->toBe($country->id)
+        ->and($results->firstWhere('id', $country->id)->id)->toBe($country->id)
         ->and($results->first()->breweries->first()->items->first()->consumed_at)->toBeNull();
 });
 
@@ -78,9 +86,17 @@ it('should scope to countries with consumed items', function () {
         'consumed_at' => now(),
     ]);
 
+    $otherCountry = Country::factory()->create();
+    $otherBrewery = Brewery::factory()->create(['country_id' => $otherCountry->id]);
+    $otherBeer = Beer::factory()->create(['brewery_id' => $otherBrewery->id]);
+    Item::factory()->create([
+        'beer_id' => $otherBeer->id,
+        'consumed_at' => null,
+    ]);
+
     $results = Country::query()->consumed()->get();
 
     expect($results)->toHaveCount(1)
         ->and($results->first()->id)->toBe($country->id)
-        ->and($results->first()->breweries->first()->items->first()->consumed_at)->toBeTruthy();
+        ->and($results->first()->breweries->first()->items->first()->consumed_at)->not->toBeNull();
 });
