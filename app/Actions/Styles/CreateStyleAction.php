@@ -8,7 +8,7 @@ use App\Models\Style;
 
 final class CreateStyleAction
 {
-    public function execute(string $name, ?int $srm): Style
+    public function handle(string $name, ?int $srm): Style
     {
         return Style::create([
             'name' => $name,
