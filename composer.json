@@ -60,6 +60,12 @@
             "@php artisan config:clear --ansi",
             "@php artisan test"
         ],
+        "pint": [
+            "./vendor/bin/pint"
+        ],
+        "pint:agent": [
+            "./vendor/bin/pint --format agent"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
