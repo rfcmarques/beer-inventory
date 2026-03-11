@@ -27,7 +27,7 @@ it('should convert model to array with expected keys', function () {
 });
 
 it('should have correct fillable attributes', function () {
-    $item = new Item();
+    $item = new Item;
 
     expect($item->getFillable())->toBe([
         'beer_id',
@@ -38,7 +38,7 @@ it('should have correct fillable attributes', function () {
 });
 
 it('should have correct casts', function () {
-    $item = new Item();
+    $item = new Item;
 
     expect($item->getCasts())
         ->toHaveKey('id', 'int')
@@ -66,7 +66,7 @@ it('should scope to available items', function () {
     $results = Item::available()->get();
 
     expect($results)->toHaveCount(3)
-        ->and($results->each(fn($item) => expect($item->consumed_at)->toBeNull()));
+        ->and($results->each(fn ($item) => expect($item->consumed_at)->toBeNull()));
 });
 
 it('should scope to consumed items', function () {
@@ -77,22 +77,20 @@ it('should scope to consumed items', function () {
     $results = Item::consumed()->get();
 
     expect($results)->toHaveCount(3)
-        ->and($results->each(fn($item) => expect($item->consumed_at)->not->toBeNull()));
+        ->and($results->each(fn ($item) => expect($item->consumed_at)->not->toBeNull()));
 });
 
 it('should scope to items expiring soon', function () {
     Item::factory()->count(3)->create([
         'consumed_at' => null,
-        'expiration_date' => now()->addDays(3)
+        'expiration_date' => now()->addDays(3),
     ]);
-
 
     $results = Item::expiringSoon()->get();
 
     expect($results)->toHaveCount(3)
-        ->and($results->each(fn($item) => expect($item->expiration_date)->toBeBetween(now(), now()->addWeeks(2))));
+        ->and($results->each(fn ($item) => expect($item->expiration_date)->toBeBetween(now(), now()->addWeeks(2))));
 });
-
 
 it('should scope items consumed by consumed_at desc', function () {
     $item1 = Item::factory()->create(['consumed_at' => now()->subDays(3)]);
@@ -153,11 +151,10 @@ it('should scope to items consumed during last month', function () {
         ->and($results->last()->is($item2))->toBeTrue();
 });
 
-
 it('should scope to items consumed during last year', function () {
     Item::factory()->create(['consumed_at' => now()->subDays(2)]);
     Item::factory()->create(['consumed_at' => now()->subWeek()]);
-    $item = Item::factory()->create(['consumed_at' => now()->subMonths(2)]);
+    $item = Item::factory()->create(['consumed_at' => now()->subYear()]);
 
     $results = Item::consumedLastYear()->get();
 
@@ -168,7 +165,7 @@ it('should scope to items consumed during last year', function () {
 it('should scope to items consumed during this year', function () {
     $item1 = Item::factory()->create(['consumed_at' => now()->subDays(2)]);
     $item2 = Item::factory()->create(['consumed_at' => now()->subWeek()]);
-    Item::factory()->create(['consumed_at' => now()->subMonths(2)]);
+    Item::factory()->create(['consumed_at' => now()->subYear()]);
 
     $results = Item::consumedThisYear()->get();
 
@@ -243,7 +240,7 @@ it('should search items by beer name', function () {
 
     expect($results)->toHaveCount(1)
         ->and($results->first()->is($item1))->toBeTrue();
-    
+
     $results = Item::search('super')->get();
 
     expect($results)->toHaveCount(1)
@@ -273,7 +270,7 @@ it('should search items by brewery name', function () {
 
     expect($results)->toHaveCount(1)
         ->and($results->first()->is($item1))->toBeTrue();
-    
+
     $results = Item::search('ophiussa')->get();
 
     expect($results)->toHaveCount(1)
@@ -303,7 +300,7 @@ it('should search items by style name', function () {
 
     expect($results)->toHaveCount(1)
         ->and($results->first()->is($item1))->toBeTrue();
-    
+
     $results = Item::search('neipa')->get();
 
     expect($results)->toHaveCount(1)
