@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Actions\Database;
 
+use App\Exceptions\BackupFileNotFoundException;
+use App\Exceptions\InvalidBackupFormatException;
 use App\Models\Beer;
 use App\Models\Brewery;
 use App\Models\Container;
@@ -11,7 +13,6 @@ use App\Models\Country;
 use App\Models\Item;
 use App\Models\Style;
 use App\Models\User;
-use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
@@ -45,8 +46,8 @@ final readonly class Import
         $jsonContent = Storage::disk('backups')->get($filePath);
         $data = json_decode($jsonContent, true);
 
-        if (!is_array($data)) {
-            throw new Exception('Invalid JSON format');
+        if (! is_array($data)) {
+            throw new InvalidBackupFormatException($filePath);
         }
 
         return $data;
@@ -54,8 +55,8 @@ final readonly class Import
 
     protected function ensureFileExists(string $filePath): void
     {
-        if (!Storage::disk('backups')->exists($filePath)) {
-            throw new Exception('File not found');
+        if (! Storage::disk('backups')->exists($filePath)) {
+            throw new BackupFileNotFoundException($filePath);
         }
     }
 
@@ -85,7 +86,7 @@ final readonly class Import
 
     protected function importTable(string $table, string $model, array $data): void
     {
-        if (!isset($data[$table])) {
+        if (! isset($data[$table])) {
             return;
         }
 
