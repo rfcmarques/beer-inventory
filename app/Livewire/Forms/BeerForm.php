@@ -11,8 +11,11 @@ use Illuminate\Validation\Rule;
 class BeerForm extends ModelForm
 {
     public string $name = '';
+
     public int $brewery_id = 0;
+
     public int $style_id = 0;
+
     public float $abv = 0.0;
 
     public function setModel(Model $model): void
@@ -50,7 +53,7 @@ class BeerForm extends ModelForm
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('beers', 'name')->ignore($this->model),
+                Rule::unique('beers', 'name')->ignore($this->model)->where('brewery_id', $this->brewery_id),
             ],
             'brewery_id' => [
                 'required',
@@ -76,7 +79,7 @@ class BeerForm extends ModelForm
         return [
             'name.required' => 'The :attribute is required.',
             'name.max' => 'The :attribute must be at most 255 characters.',
-            'name.unique' => 'The selected :attribute is already in use.',
+            'name.unique' => 'A beer with this name already exists for the selected brewery.',
             'brewery_id.required' => 'The :attribute is required.',
             'brewery_id.exists' => 'The selected :attribute is invalid.',
             'style_id.required' => 'The :attribute is required.',
