@@ -9,7 +9,7 @@ class ItemForm extends ModelForm
 {
     public int $beerId = 0;
     public int $containerId = 0;
-    public int $quantity = 0;
+    public int $quantity = 1;
     public string $expirationDate = '';
 
     public function setModel(Model $model): void
